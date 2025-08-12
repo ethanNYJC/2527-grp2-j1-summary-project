@@ -1,6 +1,6 @@
 # Import statements
 import mud
-
+pass
 import data
 
 if __name__ == "__main__":
