@@ -2,7 +2,7 @@
 
 ## Members
 
-- Member 1
+- Ethan 
 - Member 2
 - Member 3
 - Member 4
