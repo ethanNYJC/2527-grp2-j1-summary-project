@@ -7,8 +7,8 @@ intro_list = [
 ]
 
 # global variables
-game_rules = "rules babababba"
-starting_desc = "abbsbsb"
+game_rules = "rules and rules and rules"
+starting_desc = "wowzas this game is so fun "
 error_msg = "Sorry, I dont understand the command"
 
 info = {
@@ -20,6 +20,7 @@ info = {
 }
 
 # clear terminal
+@staticmethod
 def clear():
     os.system('clear')
 
