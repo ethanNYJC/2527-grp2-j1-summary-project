@@ -14,15 +14,16 @@ enemy = Enemy(name="minhan",
               evade_chance=10, 
               weapon=fists)
 
-while True:
-    os.system("clear")
+def run():
+    count = 0
+    while True:
+        os.system("clear")
+        if count >= 1:
+            hero.attack(enemy)
+            enemy.attack(hero)
+        print("Xx--------------------------------------------------------------------xX")
+        hero.health_bar.draw()
+        enemy.health_bar.draw()
 
-    
-    hero.attack(enemy)
-    enemy.attack(hero)
-    print("Xx--------------------------------------------------------------------xX")
-    hero.health_bar.draw()
-    enemy.health_bar.draw()
-
-    input()
-
+        input()
+        count += 1

@@ -1,4 +1,5 @@
 import os
+from test import run
 
 intro_list = [
     ['Start Game'],
@@ -36,8 +37,7 @@ def main():
         user_choice = input('Choose: ')
 
         if user_choice == '1':
-            # go into starting room
-            clear()
+            run()
         elif user_choice == '2':
             clear()
             print(info['rules'])
