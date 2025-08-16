@@ -13,5 +13,5 @@ class Weapon:
 
 fists = Weapon(name= "fists", 
                weapon_type="melee", 
-               damage=3, 
+               damage=2, 
                value=0)

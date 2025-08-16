@@ -1,4 +1,5 @@
 import random
+import os
 from health_bar import HealthBar
 from weapon import fists
 
@@ -9,6 +10,11 @@ class Character:
         self.health_max = health
         self.evade_chance = evade_chance
         self.weapon = weapon
+
+    def display_stats(self):
+        print(f'Name: {self.name}')
+        print(f'Damage = {(self.weapon.damage_max + self.weapon.damage_min) / 2}')
+        print(f"Evade Chance = {self.evade_chance}%")
 
     @property
     def alive(self):
@@ -24,19 +30,20 @@ class Character:
     
     def get_damaged(self, dmg, attacker):
         if not self.alive:
-            print('YOU WIN YIPPEE!')
-            print(f'final health: {attacker.health}/{attacker.health_max}')
+            os.system("clear")
+            print('\t\tYOU WIN YIPPEE!')
+            print(f'\t\tfinal health: {attacker.health}/{attacker.health_max}')
             exit(1)
 
         if self.evade():
-            print(f"{self.name} dodged the attack!")
+            print(f"\t\t{self.name} dodged the attack!")
             return
         
         self.health -= dmg
         #prevent health from gg below 0
         self.health = max(self.health, 0)
         self.health_bar.update()
-        print(f'{attacker.name} did {dmg} damage to {self.name}!')
+        print(f'\t\t{attacker.name} did {dmg} damage to {self.name}!')
 
         
 class Player(Character):
@@ -48,11 +55,15 @@ class Player(Character):
         self.health_bar = HealthBar(self, color="green")
         self.weapon = fists
 
-    
+    def display_stats(self):
+        super().display_stats()
+        print(f'Crit Chance = {self.crit_chance}%')
+        print(f'Armor: {self.armor}')
+
     def crit(self, base_dmg) -> int:
         rolled_crit = random.randint(1,100)
         if rolled_crit <= self.crit_chance:
-            print(f'{self.name} landed a CRITICAL HIT!')
+            print(f'\t\t{self.name} landed a CRITICAL HIT!')
             return base_dmg * 2
         return base_dmg
     
@@ -63,18 +74,19 @@ class Player(Character):
         
     def get_damaged(self, damage, attacker):
         if not self.alive:
-            print('game over youre ass')
+            os.system("clear")
+            print('Game Over! youre ass')
             exit(1)
 
         if self.evade():
-            print(f"{self.name} dodged the attack!")
+            print(f"\t\t{self.name} dodged the attack!")
             return
         
         self.health -= (damage - self.armor)
         #prevent health from gg below 0
         self.health = max(self.health, 0)
         self.health_bar.update()
-        print(f'{attacker.name} did {damage - self.armor} damage to {self.name}! ({self.armor} damage blocked)')
+        print(f'\t\b{attacker.name} did {damage - self.armor} damage to {self.name}! ({self.armor} damage blocked)')
         
         
 
