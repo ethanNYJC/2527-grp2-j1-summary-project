@@ -1,4 +1,5 @@
 import os
+from test import run
 
 intro_list = [
     ['Start Game'],
@@ -7,8 +8,8 @@ intro_list = [
 ]
 
 # global variables
-game_rules = "rules babababba"
-starting_desc = "abbsbsb"
+game_rules = "rules and rules and rules"
+starting_desc = "wowzas this game is so fun "
 error_msg = "Sorry, I dont understand the command"
 
 info = {
@@ -20,6 +21,7 @@ info = {
 }
 
 # clear terminal
+@staticmethod
 def clear():
     os.system('clear')
 
@@ -35,8 +37,7 @@ def main():
         user_choice = input('Choose: ')
 
         if user_choice == '1':
-            # go into starting room
-            clear()
+            run()
         elif user_choice == '2':
             clear()
             print(info['rules'])

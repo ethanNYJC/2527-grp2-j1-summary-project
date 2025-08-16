@@ -2,10 +2,10 @@
 
 ## Members
 
-- Ethan (Team lead)
-- Min Han (Test Engineer)
-- Jun lei (Game programmer)
-- Atheeq (Data designer)
+- Member 1
+- Member 2
+- Member 3
+- Member 4
 
 # This is a J1 Summary Project
 - It is a simple MUD game about an irresponsible child who failed to clean his rooom
