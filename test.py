@@ -3,16 +3,17 @@ from weapon import fists
 import os
 
 hero = Player(name="ethan", 
-              health=10, 
+              health=50, 
               weapon=fists, 
-              evade_chance=0, 
-              crit_chance=0,
+              evade_chance=10, 
+              crit_chance=10,
               armor=0)
 
 enemy = Enemy(name="minhan", 
               health=20, 
-              evade_chance=10, 
-              weapon=fists)
+              weapon=fists,
+              evade_chance=10
+              )
 
 def run():
     count = 0

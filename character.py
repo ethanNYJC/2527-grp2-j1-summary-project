@@ -4,7 +4,7 @@ from health_bar import HealthBar
 from weapon import fists
 
 class Character:
-    def __init__(self, name, health, evade_chance, weapon) -> None:
+    def __init__(self, name, health, weapon, evade_chance) -> None:
         self.name = name
         self.health = health
         self.health_max = health
