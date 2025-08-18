@@ -11,7 +11,7 @@ class Weapon:
     def damage(self):
         return random.randint(self.damage_min, self.damage_max)
 
-fists = Weapon(name= "fists", 
+default = Weapon(name= "fists", 
                weapon_type="melee", 
                damage=2, 
                value=0)
