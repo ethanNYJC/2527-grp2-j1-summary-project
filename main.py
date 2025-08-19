@@ -10,7 +10,15 @@ intro_list = [
 
 # global variables
 game_rules = "rules and rules and rules"
-starting_desc = "wowzas this game is so fun "
+
+starting_desc = "In this game, you are a child who didn't clean your room. \n" \
+"To teach you a lesson, your parents shrunk you down to the\n" \
+"size of an ant to let you experience how dirty your room was.\n" \
+"During your journey to the door, you encounter many gargantuan\n" \
+"beasts that were once tiny compared to you, now posing a real\n" \
+"threat. As you continue on your adventure, level up your gear\n" \
+"to defeat stronger and stronger foes, up until the final boss... "
+
 error_msg = "Sorry, I dont understand the command"
 
 info = {
@@ -27,10 +35,11 @@ def clear():
     os.system('clear')
 
 def main():
+    """main game loop"""
     clear()
     
-    print(f'Welcome to {info['title']}')
-    print(info['desc'])
+    print(f'Welcome to {info['title']}\n')
+    print(f'{info['desc']}\n')
 
     while True:
         for i, item in enumerate(info['intro'], start=1):

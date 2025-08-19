@@ -66,7 +66,7 @@ player = Player(name="ethan",
               health=20, 
               weapon=default, 
               evade_chance=10, 
-              crit_chance=10,
+              crit_chance=100,
               armor=0)
 
 ant = Enemy(name="minhan", 

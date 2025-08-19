@@ -76,7 +76,7 @@ def fight(player, enemy):
             else:
                 os.system("clear")
                 print('\t\tYOU WIN YIPPEE!')
-                print(f'\t\tfinal health: {enemy.health}/{enemy.health_max}')
+                print(f'\t\tfinal health: {player.health}/{player.health_max}')
                 return
             print("Xx" + "-"*54 + "xX")
 
