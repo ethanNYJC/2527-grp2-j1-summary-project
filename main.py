@@ -1,5 +1,6 @@
 import os
-from test import fight, ant
+from battle import fight
+from character import player, ant 
 
 intro_list = [
     ['Start Game'],
@@ -37,7 +38,7 @@ def main():
         user_choice = input('Choose: ')
 
         if user_choice == '1':
-            fight(ant)
+            fight(player, ant)
         elif user_choice == '2':
             clear()
             print(info['rules'])
