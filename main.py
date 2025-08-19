@@ -1,5 +1,5 @@
 import os
-from test import run
+from test import fight, ant
 
 intro_list = [
     ['Start Game'],
@@ -37,7 +37,7 @@ def main():
         user_choice = input('Choose: ')
 
         if user_choice == '1':
-            run()
+            fight(ant)
         elif user_choice == '2':
             clear()
             print(info['rules'])

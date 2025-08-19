@@ -1,7 +1,8 @@
 import random
 import os
 from health_bar import HealthBar
-from weapon import fists
+from weapon import default
+
 
 class Character:
     def __init__(self, name, health, weapon, evade_chance) -> None:
@@ -13,7 +14,7 @@ class Character:
 
     def display_stats(self):
         print(f'Name: {self.name}')
-        print(f'Damage = {(self.weapon.damage_max + self.weapon.damage_min) / 2}')
+        print(f'Damage = {self.weapon.damage_min}-{self.weapon.damage_max}')
         print(f"Evade Chance = {self.evade_chance}%")
 
     @property
@@ -49,11 +50,12 @@ class Character:
 class Player(Character):
     def __init__(self, name, health, weapon, evade_chance, crit_chance, armor):
         super().__init__(name, health, evade_chance, weapon)
+        self.has_item = False
         self.evade_chance = evade_chance
         self.crit_chance = crit_chance
         self.armor = armor
         self.health_bar = HealthBar(self, color="green")
-        self.weapon = fists
+        self.weapon = default
 
     def display_stats(self):
         super().display_stats()
@@ -91,10 +93,13 @@ class Player(Character):
         
 
 class Enemy(Character):
-    def __init__(self, name, health, evade_chance, weapon):
-        super().__init__(name, health, evade_chance, weapon)
+    def __init__(self, name, health, weapon, evade_chance):
+        super().__init__(name, health, weapon, evade_chance)
         self.health_bar = HealthBar(self, color="red")
         self.weapon = weapon
+
+    def display_stats(self):
+        super().display_stats()
 
     def evade(self) -> bool:
         rolled_evade = random.randint(1,100)
