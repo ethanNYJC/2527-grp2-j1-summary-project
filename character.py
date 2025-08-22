@@ -63,10 +63,10 @@ class Enemy(Character):
 
 
 player = Player(name="ethan", 
-              health=20, 
+              health=50, 
               weapon=default, 
               evade_chance=10, 
-              crit_chance=100,
+              crit_chance=10,
               armor=0)
 
 ant = Enemy(name="minhan", 
