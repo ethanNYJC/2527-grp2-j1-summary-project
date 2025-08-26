@@ -46,7 +46,10 @@ def main():
         user_choice = input('Choose: ')
 
         if user_choice == '1':
-            fight(player, ant)
+            if fight(player, ant) == True:
+                print("shop then next round")
+            else:
+                break
         elif user_choice == '2':
             clear()
             print(info['rules'])

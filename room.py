@@ -34,7 +34,7 @@ class GameMap:
         connected = self.current_room.get_connected()
         if connected[direction]:
             self.current_room = connected[direction]
-            return f"You move {direction}.\n{self.describe_current()}"
+            return f"You move {direction} and enter {self.describe_current()}"
         return "You can't go that way."
 
     def describe_current(self):
@@ -44,7 +44,7 @@ class GameMap:
             if value:
                 exits.append(key)
                 
-        return f"{self.current_room.get_name()}\n{self.current_room.get_description()}\nExits: {exits}"
+        return f"{self.current_room.get_name()}: {self.current_room.get_description()}\nExits: {exits}"
 
 
 

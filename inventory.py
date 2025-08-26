@@ -38,6 +38,7 @@ class Inventory:
 
 
     def sell_item(self, item):
+        
         while True:
             current = self.head
             prev = None
