@@ -33,24 +33,34 @@ class GameMap:
 
     def move(self):
         """move to connected room"""
-        direction = input('Where do you want to go: ')
+        connected_rooms = []
         connected = self.current_room.get_connected()
+        for key, value in connected.items():
+            if value is not None:
+                connected_rooms.append(f'{key} --> {value.name}')
+
+        print(f'\navailable exits:{connected_rooms}')
+
+        direction = input(f'\nWhere do you want to go?')
+
         while direction not in connected:
             os.system('clear')
-            print(connected)
             print('invalid direction')
-            direction = input('Where do you want to go: ')
+            print(f'\navailable exits:{connected_rooms}')
+            direction = input(f'\nWhere do you want to go: ')
         os.system('clear')
         self.current_room = connected[direction]
-        print(f"You move {direction}.\n{self.describe_current()}")
+        print(f"You move {direction}.\n")
+        print(self.describe_current())
 
 
     def describe_current(self):
         """return description of current room and exits"""
         exits = []
-        for key, value in self.current_room.get_connected().items():
-            if value:
-                exits.append(key)
+        connected = self.current_room.get_connected()
+        for key, value in connected.items():
+            if value is not None:
+                exits.append(f'{key} --> {value.name}')
                 
         return f"{self.current_room.get_name()}: {self.current_room.get_description()}\nExits: {exits}"
 

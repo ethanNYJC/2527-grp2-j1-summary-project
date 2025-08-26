@@ -1,4 +1,4 @@
-from character import Player, Enemy, roll_dice, player, ant 
+from character import Character, Player, Enemy, roll_dice, player, ant 
 from weapon import default
 from room import Room, GameMap, world
 import os
@@ -48,7 +48,7 @@ def fight(player, enemy):
                     print(f'\t\t{player.name} did {result["dmg"]} damage to {enemy.name}!')
             else:
                 os.system("clear")
-                print('Game Over! youre ass')
+                print('Game Over! Thanks for playing.')
                 exit(1)
             
             if enemy.is_alive():
@@ -60,8 +60,9 @@ def fight(player, enemy):
             else:
                 os.system("clear")
                 enemy.health = enemy.health_max
-                print('\t\tYOU WIN YIPPEE!')
-                print(f'\t\tfinal health: {player.health}/{player.health_max}')
+                enemy.health_bar.update()
+                print('YOU WIN YIPPEE!')
+                print(f'final health: {player.health}/{player.health_max}')
                 return True
             print("Xx" + "-"*54 + "xX")
 
@@ -75,8 +76,7 @@ def fight_room(room: Room):
     for i, enemy in enumerate(room.enemies, start = 1):
         fight(player, enemy)
         if i < len(room.enemies):
-            input(f'\t\t\b"press enter to fight the next enemy"')
-    print(world.describe_current())
+            input(f'\npress enter to fight the next enemy')
     world.move()
 
 

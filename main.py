@@ -48,7 +48,9 @@ def main():
     if user_choice == '1':
         while player.is_alive():
             clear()
-            input(f'press enter to start your battle in {world.current_room.get_name()}\nenemies in room: {[enemy.name for enemy in world.current_room.enemies]}')
+            print(world.describe_current())
+            print(f'enemies in room: {[enemy.name for enemy in world.current_room.enemies]}\n')
+            input(f'press "Enter" to start your battle in {world.current_room.get_name()}')
             fight_room(world.current_room)
     elif user_choice == '2':
         clear()
