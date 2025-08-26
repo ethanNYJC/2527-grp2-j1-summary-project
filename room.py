@@ -1,3 +1,6 @@
+from character import player, ant 
+import os
+
 class Room:
     def __init__(self, name: str, description: str, enemies: list):
         self.name = name
@@ -28,14 +31,19 @@ class GameMap:
         if self.current_room is None:
             self.current_room = room  
 
-    def move(self, direction: str):
+    def move(self):
         """move to connected room"""
-
+        direction = input('Where do you want to go: ')
         connected = self.current_room.get_connected()
-        if connected[direction]:
-            self.current_room = connected[direction]
-            return f"You move {direction} and enter {self.describe_current()}"
-        return "You can't go that way."
+        while direction not in connected:
+            os.system('clear')
+            print(connected)
+            print('invalid direction')
+            direction = input('Where do you want to go: ')
+        os.system('clear')
+        self.current_room = connected[direction]
+        print(f"You move {direction}.\n{self.describe_current()}")
+
 
     def describe_current(self):
         """return description of current room and exits"""
@@ -48,10 +56,10 @@ class GameMap:
 
 
 
-room1 = Room('room1', 'This is the first room.', ['enemy1', 'enemy2'])
-room2 = Room('room2', 'This is the second room.', ['enemy3', 'enemy4'])
-room3 = Room('room3', 'This is the third room.', ['enemy5'])
-room4 = Room('room4', 'This is the fourth room.', ['enemy6'])
+room1 = Room('room1', 'This is the first room.', [ant, ant])
+room2 = Room('room2', 'This is the second room.', [ant])
+room3 = Room('room3', 'This is the third room.', [ant, ant, ant])
+room4 = Room('room4', 'This is the fourth room.', [ant, ant, ant, ant])
 room1.set_connected('east', room2)
 room2.set_connected('west', room1)
 room2.set_connected('east', room3)
@@ -64,10 +72,7 @@ world.add_room(room1)
 world.add_room(room2)
 world.add_room(room3)
 world.add_room(room4)
-print(world.describe_current())
-print(world.move('east'))
-print(world.move('north'))
-print(world.move('north'))
+
 
 
 

@@ -1,5 +1,6 @@
 from character import Player, Enemy, roll_dice, player, ant 
 from weapon import default
+from room import Room, GameMap, world
 import os
 
 def single_attack(attacker: Character, defender: Character):
@@ -26,6 +27,7 @@ def single_attack(attacker: Character, defender: Character):
 
 def fight(player, enemy):
     count = 0
+
     while True:
         os.system("clear")
 
@@ -46,8 +48,8 @@ def fight(player, enemy):
                     print(f'\t\t{player.name} did {result["dmg"]} damage to {enemy.name}!')
             else:
                 os.system("clear")
-                print('Game Over!')
-                return False
+                print('Game Over! youre ass')
+                exit(1)
             
             if enemy.is_alive():
                 result = single_attack(enemy, player)
@@ -57,6 +59,7 @@ def fight(player, enemy):
                     print(f'\t{enemy.name} did {result["dmg"]} damage to {player.name}! ({player.armor} damage blocked)')
             else:
                 os.system("clear")
+                enemy.health = enemy.health_max
                 print('\t\tYOU WIN YIPPEE!')
                 print(f'\t\tfinal health: {player.health}/{player.health_max}')
                 return True
@@ -67,6 +70,21 @@ def fight(player, enemy):
         enemy.health_bar.draw()
         input(f'\t\t\b"press enter to attack"')
         count += 1
+
+def fight_room(room: Room):
+    for i, enemy in enumerate(room.enemies, start = 1):
+        fight(player, enemy)
+        if i < len(room.enemies):
+            input(f'\t\t\b"press enter to fight the next enemy"')
+    print(world.describe_current())
+    world.move()
+
+
+
+
+    
+
+    
         
 
         

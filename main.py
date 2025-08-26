@@ -1,5 +1,6 @@
 import os
-from battle import fight
+from battle import fight, fight_room
+from room import room1, world
 from character import player, ant 
 
 intro_list = [
@@ -40,26 +41,25 @@ def main():
     print(f'Welcome to {info['title']}\n')
     print(f'{info['desc']}\n')
 
-    while True:
-        for i, item in enumerate(info['intro'], start=1):
-            print(f'{i}: {item}')
-        user_choice = input('Choose: ')
+    for i, item in enumerate(info['intro'], start=1):
+        print(f'{i}: {item}')
+    user_choice = input('Choose: ')
 
-        if user_choice == '1':
-            if fight(player, ant) == True:
-                print("shop then next round")
-            else:
-                break
-        elif user_choice == '2':
+    if user_choice == '1':
+        while player.is_alive():
             clear()
-            print(info['rules'])
-        elif user_choice == '3':
-            clear()
-            print('Thanks for playing')
-            exit(1)
-        else:
-            clear()
-            print(info['error'])
+            input(f'press enter to start your battle in {world.current_room.get_name()}\nenemies in room: {[enemy.name for enemy in world.current_room.enemies]}')
+            fight_room(world.current_room)
+    elif user_choice == '2':
+        clear()
+        print(info['rules'])
+    elif user_choice == '3':
+        clear()
+        print('Thanks for playing')
+        exit(1)
+    else:
+        clear()
+        print(info['error'])
 
 
 if __name__ == "__main__":
