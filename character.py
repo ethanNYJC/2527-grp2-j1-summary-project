@@ -75,7 +75,7 @@ class Enemy(Character):
 
 
 player = Player(name="ethan",
-              health=50, 
+              health=100, 
               weapon=default, 
               evade_chance=10, 
               crit_chance=10,
@@ -100,16 +100,16 @@ flying_cockroach = Enemy(name="flying cockroach",
 dustmite = Enemy(name="dustmite",
                  health=15,
                  weapon=crayon,
-                 evade_chance=5,
+                 evade_chance=0,
                  crit_chance=5,
                  armor=0,
                  loot=8)
 
 jumping_spider = Enemy(name="jumping spider",
-                       health=20,
+                       health=12,
                        weapon=sandpaper_scrap,
-                       evade_chance=15,
-                       crit_chance=0,
+                       evade_chance=10,
+                       crit_chance=-5,
                        armor=0,
                        loot=10)
 

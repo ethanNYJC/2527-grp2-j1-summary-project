@@ -97,7 +97,7 @@ room_descriptions = {
     "pantry": "All enemies here are well fed and slaying them will feel extra rewarding. But beware! To them you look like a tasty treat to satisfy their hunger!"
 }
 
-bed = Room('Bed', room_descriptions["bed"], create_enemies())
+bed = Room('Bed', room_descriptions["bed"], [ant, ant])
 dollhouse = Room('Dollhouse', room_descriptions["dollhouse"], create_enemies())
 bookshelf = Room('Bookshelf', room_descriptions["bookshelf"], create_enemies())
 under_bed = Room('Under the Bed', room_descriptions["under_bed"], create_enemies())
