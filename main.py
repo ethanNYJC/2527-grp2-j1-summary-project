@@ -1,6 +1,6 @@
 import os
 from battle import fight, fight_room
-from room import room1, world
+from room import world
 from character import Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat 
 
 intro_list = [
