@@ -1,5 +1,5 @@
-from character import Character, Player, Enemy, roll_dice, player, ant 
-from weapon import default
+from character import Character, roll_dice, player, ant 
+from weapon import  Weapon, default, crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun, weapon_list
 from room import Room, GameMap, world
 import os
 
@@ -12,10 +12,10 @@ def single_attack(attacker: Character, defender: Character):
         "attacker": "player",
         "defender": "enemy"
     }
-    result["evade"] = roll_dice(defender.evade_chance, 100)
+    result["evade"] = roll_dice(defender.total_evade, 100)
 
-    dmg = attacker.weapon.damage - defender.armor
-    result["crit"] = roll_dice(attacker.crit_chance, 100)
+    dmg = max(attacker.weapon.damage - defender.total_armor, 0)
+    result["crit"] = roll_dice(attacker.total_crit, 100)
 
     if result["crit"]:
         dmg *= 2
@@ -56,7 +56,9 @@ def fight(player, enemy):
                 if result["evade"]:
                     print(f"\t\t{player.name} dodged the attack!")
                 else:
-                    print(f'\t{enemy.name} did {result["dmg"]} damage to {player.name}! ({player.armor} damage blocked)')
+                    print(f'\t\t{enemy.name} did {result["dmg"]} damage to {player.name}!')
+                    if player.total_armor > 0:
+                        print(f'\t\t{player.total_armor} damage blocked!')
             else:
                 os.system("clear")
                 enemy.health = enemy.health_max
