@@ -44,11 +44,11 @@ staple_bullet = Weapon(name="staple bullet",
 sandpaper_scrap = Weapon(name="sandpaper scrap",
                          description="maybe you can wrap it around your hands?",
                          weapon_type="melee",
-                         damage=4,
+                         damage=3,
                          evade_stat=0,
                          crit_stat=5,
                          armor_stat=1,
-                         value=15)
+                         value=20)
 
 slingshot = Weapon(name="slingshot",
                    description="reliable and sturdy.",
@@ -63,10 +63,10 @@ bubble_wrap = Weapon(name="bubble wrap",
                      description="try not to pop this one, you need it to survive...",
                      weapon_type="special",
                      damage=2,
-                     evade_stat=5,
+                     evade_stat=0,
                      crit_stat=-10,
                      armor_stat=2,
-                     value=24)
+                     value=22)
 
 hand_sanitizer = Weapon(name="hand sanitizer",
                         description="kills 99.9 percent of germs, or so it says...",
