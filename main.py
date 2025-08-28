@@ -2,6 +2,7 @@ import os
 from battle import fight, fight_room
 from room import room1, world
 from character import Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat 
+from shop import shop
 
 intro_list = [
     ['Start Game'],
@@ -52,6 +53,8 @@ def main():
             print(f'enemies in room: {[enemy.name for enemy in world.current_room.enemies]}\n')
             input(f'press "Enter" to start your battle in {world.current_room.get_name()}')
             fight_room(world.current_room)
+            shop.open()
+            
     elif user_choice == '2':
         clear()
         print(info['rules'])

@@ -60,8 +60,8 @@ class Player(Character):
         
     def replace_weapon(self, new_weapon):
         old_weapon = self.weapon
-        self.crumbs += old_weapon.value
         self.weapon = new_weapon
+        print(f'you replaced {old_weapon.name} with {new_weapon.name}!')
         
 class Enemy(Character):
     def __init__(self, name, health, weapon, evade_chance, crit_chance, armor, loot):
