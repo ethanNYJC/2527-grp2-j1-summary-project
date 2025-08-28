@@ -30,7 +30,7 @@ crayon = Weapon(name="crayon",
                 evade_stat=0,
                 crit_stat=10,
                 armor_stat=0,
-                value=15)
+                value=10)
 
 staple_bullet = Weapon(name="staple bullet",
                        description="careful not to prick your fingers!",
@@ -39,7 +39,7 @@ staple_bullet = Weapon(name="staple bullet",
                        evade_stat=10,
                        crit_stat=0,
                        armor_stat=0,
-                       value=15)
+                       value=10)
 
 sandpaper_scrap = Weapon(name="sandpaper scrap",
                          description="maybe you can wrap it around your hands?",
@@ -48,7 +48,7 @@ sandpaper_scrap = Weapon(name="sandpaper scrap",
                          evade_stat=0,
                          crit_stat=5,
                          armor_stat=1,
-                         value=20)
+                         value=15)
 
 slingshot = Weapon(name="slingshot",
                    description="reliable and sturdy.",
@@ -57,7 +57,7 @@ slingshot = Weapon(name="slingshot",
                    evade_stat=5,
                    crit_stat=5,
                    armor_stat=0,
-                   value=20)
+                   value=15)
 
 bubble_wrap = Weapon(name="bubble wrap",
                      description="try not to pop this one, you need it to survive...",
@@ -66,7 +66,7 @@ bubble_wrap = Weapon(name="bubble wrap",
                      evade_stat=10,
                      crit_stat=-10,
                      armor_stat=2,
-                     value=25)
+                     value=20)
 
 hand_sanitizer = Weapon(name="hand sanitizer",
                         description="kills 99.9 percent of germs, or so it says...",
@@ -75,7 +75,7 @@ hand_sanitizer = Weapon(name="hand sanitizer",
                         evade_stat=-10,
                         crit_stat=30,
                         armor_stat=0,
-                        value=30)
+                        value=24)
 
 chicken_bone = Weapon(name="chicken bone",
                       description="rotten and teri-fryingly strong",
@@ -84,7 +84,7 @@ chicken_bone = Weapon(name="chicken bone",
                       evade_stat=0,
                       crit_stat=30,
                       armor_stat=0,
-                      value=45)
+                      value=30)
 
 ketchup_gun = Weapon(name="ketchup gun",
                      description="ronald mcdonald would approve. ba-da-ba-ba-ba",
@@ -93,7 +93,7 @@ ketchup_gun = Weapon(name="ketchup gun",
                      evade_stat=40,
                      crit_stat=20,
                      armor_stat=0,
-                     value=45)
+                     value=30)
 
 weapon_list = [crayon, crayon, crayon, crayon,
                staple_bullet, staple_bullet, staple_bullet, staple_bullet,
