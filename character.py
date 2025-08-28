@@ -61,6 +61,10 @@ class Player(Character):
     def replace_weapon(self, new_weapon):
         old_weapon = self.weapon
         self.weapon = new_weapon
+        self.total_evade = self.evade_chance + self.weapon.evade_stat
+        self.total_crit = self.crit_chance + self.weapon.crit_stat
+        self.total_armor = self.armor + self.weapon.armor_stat
+
         print(f'you replaced {old_weapon.name} with {new_weapon.name}!')
         
 class Enemy(Character):
