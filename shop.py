@@ -27,6 +27,7 @@ class Shop:
     def display_shop(self):
         print("\n=== 🛒 Welcome to the Shop ===")
         print(f'current health: {player.health}')
+        print(f'current weapon: {player.weapon.name}')
         print(f"no. of crumbs: {player.crumbs}\n")
         print("\n-- Weapons --")
 
