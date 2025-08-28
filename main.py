@@ -11,7 +11,18 @@ intro_list = [
 ]
 
 # global variables
-game_rules = "rules and rules and rules"
+game_rules = """
+- Player (Hero) will start with 50 health and base attack, evade chance, crit chance and 0 armor. 
+- Each Room will have a random number of enemies spawned (2-3). Each enemy will drop money (crumbs)
+- Battle is automated with each turn trading attacks until one wins.
+
+- After every Room, a Shop with 2 randomly generated weapons and a consumable to recover health will
+be made available in exchange for crumbs
+
+After the Shop, a choice can be made to go to the next Room depending on which direction you choose.
+
+GOOD LUCK!
+"""
 
 starting_desc = """
     In this game, you are a child who didn't clean your room. To teach you a lesson, your parents shrunk you down
@@ -58,6 +69,9 @@ def main():
     elif user_choice == '2':
         clear()
         print(info['rules'])
+        input('Press "Enter" to return to home screen')
+
+        main()
     elif user_choice == '3':
         clear()
         print('Thanks for playing')
