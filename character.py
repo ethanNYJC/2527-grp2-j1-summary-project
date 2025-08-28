@@ -82,66 +82,66 @@ player = Player(name="ethan",
               armor=0)
 
 ant = Enemy(name="ant", 
-              health=10, 
+              health=5, 
               weapon=default,
               evade_chance=0,
               crit_chance=0,
               armor=0,
-              loot=5)
+              loot=3)
 
 flying_cockroach = Enemy(name="flying cockroach",
                          health=10,
                          weapon=staple_bullet,
-                         evade_chance=30,
-                         crit_chance=5,
+                         evade_chance=10,
+                         crit_chance=3,
                          armor=0,
-                         loot=7)
+                         loot=5)
 
 dustmite = Enemy(name="dustmite",
-                 health=15,
+                 health=5,
                  weapon=crayon,
-                 evade_chance=0,
+                 evade_chance=10,
                  crit_chance=5,
                  armor=0,
-                 loot=8)
+                 loot=4)
 
 jumping_spider = Enemy(name="jumping spider",
                        health=12,
                        weapon=sandpaper_scrap,
-                       evade_chance=10,
-                       crit_chance=-5,
+                       evade_chance=5,
+                       crit_chance=2,
                        armor=0,
-                       loot=10)
+                       loot=6)
 
 centipede = Enemy(name="centipede",
-                  health=35,
+                  health=15,
                   weapon=default,
-                  evade_chance=10,
+                  evade_chance=0,
                   crit_chance=10,
                   armor=0,
-                  loot=14)
+                  loot=8)
 
 ladybug = Enemy(name="ladybug",
-                health=13,
+                health=12,
                 weapon=hand_sanitizer,
-                evade_chance=0,
-                crit_chance=10,
+                evade_chance=5,
+                crit_chance=-10,
                 armor=0,
-                loot=20)
+                loot=8)
 
 toy_soldier = Enemy(name="toy soldier",
                     health=20,
                     weapon=bubble_wrap,
                     evade_chance=-10,
-                    crit_chance=20,
-                    armor=0,
-                    loot=22)
+                    crit_chance=15,
+                    armor=-1,
+                    loot=10)
 
 fat_rat = Enemy(name="THE FAT RAT.",
-                health=60,
+                health=50,
                 weapon=slingshot,
                 evade_chance=-5,
-                crit_chance=5,
+                crit_chance=10,
                 armor=1,
                 loot=0)
 
