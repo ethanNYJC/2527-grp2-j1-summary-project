@@ -69,8 +69,12 @@ def fight(player, enemy):
                         print(f'\t\t{player.total_armor} damage blocked!')
             else:
                 os.system("clear")
-                player.crumbs += enemy.loot
 
+                if enemy.name == "THE FAT RAT.":
+                    victory_screen()
+                    exit(1)
+
+                player.crumbs += enemy.loot
                 enemy.health = enemy.health_max
                 enemy.health_bar.update()
                 print('YOU WIN YIPPEE!')
@@ -92,6 +96,28 @@ def fight_room(room: Room):
             print(f'\n{enemy.name} dropped {enemy.loot} crumbs!')
             input(f'press enter to fight the next enemy')
     world.move()
+
+def victory_screen():
+    print("\n" + "=" * 60)
+    print(" " * 15 + "🏆 CONGRATULATIONS, HERO! 🏆")
+    print("=" * 60)
+    print(r"""
+__     ______  _    _        __          _______ _   _ 
+\ \   / / __ \| |  | |       \ \        / /_   _| \ | |
+ \ \_/ / |  | | |  | |        \ \  /\  / /  | | |  \| |
+  \   /| |  | | |  | |         \ \/  \/ /   | | | . ` |
+   | | | |__| | |__| |          \  /\  /   _| |_| |\  |
+   |_|  \____/ \____/            \/  \/   |_____|_| \_|
+
+    """)
+    print("\nMummy and Daddy turned you back to your normal size!")
+    print("Hopefully you clean your room next time...")
+    print("\n" + "-" * 60)
+    print("🎉 Thanks for playing! 🎉")
+    print("=" * 60 + "\n")
+
+
+
 
 
 

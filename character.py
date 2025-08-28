@@ -63,11 +63,10 @@ class Player(Character):
 
     def replace_weapon(self, new_weapon):
         old_weapon = self.weapon
-        self.set_weapon(new_weapon)
-
-        self.total_evade = (self.evade_chance + self.weapon.evade_stat)
-        self.total_crit = (self.crit_chance + self.weapon.crit_stat)
-        self.total_armor = (self.armor + self.weapon.armor_stat)
+        self.weapon = new_weapon
+        self.total_evade = self.evade_chance + self.weapon.evade_stat
+        self.total_crit = self.crit_chance + self.weapon.crit_stat
+        self.total_armor = self.armor + self.weapon.armor_stat
 
         print(f'you replaced {old_weapon.name} with {new_weapon.name}!')
         
@@ -90,7 +89,7 @@ player = Player(name="ethan",
               armor=0)
 
 ant = Enemy(name="ant", 
-              health=7, 
+              health=8, 
               weapon=default,
               evade_chance=0,
               crit_chance=0,
@@ -98,12 +97,12 @@ ant = Enemy(name="ant",
               loot=3)
 
 flying_cockroach = Enemy(name="flying cockroach",
-                         health=10,
+                         health=12,
                          weapon=staple_bullet,
-                         evade_chance=10,
-                         crit_chance=3,
+                         evade_chance=15,
+                         crit_chance=4,
                          armor=0,
-                         loot=6)
+                         loot=8)
 
 dustmite = Enemy(name="dustmite",
                  health=8,
@@ -111,46 +110,46 @@ dustmite = Enemy(name="dustmite",
                  evade_chance=10,
                  crit_chance=5,
                  armor=0,
-                 loot=6)
+                 loot=5)
 
 jumping_spider = Enemy(name="jumping spider",
-                       health=12,
+                       health=14,
                        weapon=sandpaper_scrap,
                        evade_chance=5,
-                       crit_chance=2,
+                       crit_chance=8,
                        armor=0,
                        loot=10)
 
 centipede = Enemy(name="centipede",
-                  health=25,
+                  health=30,
                   weapon=default,
                   evade_chance=0,
-                  crit_chance=10,
+                  crit_chance=15,
                   armor=0,
                   loot=10)
 
 ladybug = Enemy(name="ladybug",
-                health=12,
+                health=20,
                 weapon=hand_sanitizer,
                 evade_chance=5,
-                crit_chance=-10,
+                crit_chance=-5,
                 armor=0,
-                loot=15)
+                loot=10)
 
 toy_soldier = Enemy(name="toy soldier",
-                    health=20,
+                    health=30,
                     weapon=bubble_wrap,
-                    evade_chance=-10,
+                    evade_chance=-15,
                     crit_chance=15,
-                    armor=-1,
+                    armor=0,
                     loot=15)
 
 fat_rat = Enemy(name="THE FAT RAT.",
                 health=50,
                 weapon=slingshot,
                 evade_chance=-5,
-                crit_chance=5,
-                armor=1,
+                crit_chance=10,
+                armor=2,
                 loot=0)
 
 enemy_list = [ant, ant, ant, ant, 
