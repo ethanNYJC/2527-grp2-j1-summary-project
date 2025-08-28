@@ -84,15 +84,22 @@ chicken_bone = Weapon(name="chicken bone",
                       evade_stat=0,
                       crit_stat=30,
                       armor_stat=0,
-                      value=40)
+                      value=45)
 
 ketchup_gun = Weapon(name="ketchup gun",
                      description="ronald mcdonald would approve. ba-da-ba-ba-ba",
                      weapon_type="ranged",
                      damage=3,
                      evade_stat=40,
-                     crit_stat=15,
+                     crit_stat=20,
                      armor_stat=0,
-                     value=40)
+                     value=45)
 
-weapon_list = [crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun]
+weapon_list = [crayon, crayon, crayon, crayon,
+               staple_bullet, staple_bullet, staple_bullet, staple_bullet,
+               sandpaper_scrap, sandpaper_scrap, sandpaper_scrap, 
+               slingshot, slingshot, slingshot,
+               bubble_wrap, bubble_wrap, 
+               hand_sanitizer, hand_sanitizer,
+               chicken_bone, 
+               ketchup_gun]

@@ -1,4 +1,4 @@
-from character import Character, roll_dice, player, ant 
+from character import roll_dice, Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat 
 from weapon import  Weapon, default, crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun, weapon_list
 from room import Room, GameMap, world
 import os
@@ -46,6 +46,9 @@ def fight(player, enemy):
                     if result["crit"]:
                         print(f'\t\t{player.name} landed a CRITICAL HIT!')
                     print(f'\t\t{player.name} did {result["dmg"]} damage to {enemy.name}!')
+
+                    if enemy.total_armor > 0:
+                        print(f'\t\t{enemy.total_armor} damage blocked!')
             else:
                 os.system("clear")
                 print('Game Over! Thanks for playing.')
@@ -54,17 +57,25 @@ def fight(player, enemy):
             if enemy.is_alive():
                 result = single_attack(enemy, player)
                 if result["evade"]:
-                    print(f"\t\t{player.name} dodged the attack!")
+                    print(f"\n\t\t{player.name} dodged the attack!")
                 else:
-                    print(f'\t\t{enemy.name} did {result["dmg"]} damage to {player.name}!')
+                    if result["crit"]:
+                        print(f'\n\t\t{enemy.name} landed a CRITICAL HIT!')
+                        print(f'\t\t{enemy.name} did {result["dmg"]} damage to {player.name}!')
+                    else:
+                        print(f'\n\t\t{enemy.name} did {result["dmg"]} damage to {player.name}!')
+
                     if player.total_armor > 0:
                         print(f'\t\t{player.total_armor} damage blocked!')
             else:
                 os.system("clear")
+                player.crumbs += enemy.loot
+
                 enemy.health = enemy.health_max
                 enemy.health_bar.update()
                 print('YOU WIN YIPPEE!')
                 print(f'final health: {player.health}/{player.health_max}')
+                print(f'no. of crumbs: {player.crumbs}')
                 return True
             print("Xx" + "-"*54 + "xX")
 
@@ -78,7 +89,8 @@ def fight_room(room: Room):
     for i, enemy in enumerate(room.enemies, start = 1):
         fight(player, enemy)
         if i < len(room.enemies):
-            input(f'\npress enter to fight the next enemy')
+            print(f'\n{enemy.name} dropped {enemy.loot} crumbs!')
+            input(f'press enter to fight the next enemy')
     world.move()
 
 
