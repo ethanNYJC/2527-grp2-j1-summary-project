@@ -69,11 +69,6 @@ def fight(player, enemy):
                         print(f'\t\t{player.total_armor} damage blocked!')
             else:
                 os.system("clear")
-
-                if enemy.name == "THE FAT RAT.":
-                    print('CONGRATULATIONS! YOU HAVE DEFEATED THE FINAL BOSS AND WON THE GAME!')
-                    exit(1)
-
                 player.crumbs += enemy.loot
 
                 enemy.health = enemy.health_max

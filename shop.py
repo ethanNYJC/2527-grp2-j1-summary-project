@@ -25,7 +25,6 @@ class Shop:
         weapon_slot2 = random.choice(weapon_list)
 
     def display_shop(self):
-        os.system("clear")
         print("\n=== 🛒 Welcome to the Shop ===")
         print(f'current health: {player.health}')
         print(f"no. of crumbs: {player.crumbs}\n")
@@ -54,7 +53,8 @@ class Shop:
             if player.crumbs >= weapon_slot2.value:
                 player.crumbs -= weapon_slot2.value
                 player.replace_weapon(weapon_slot2)
-            print("you don't have enough crumbs for this item.")
+            else:
+                print("you don't have enough crumbs for this item.")
 
         elif choice == "3":
             if player.crumbs >= 3:
@@ -76,6 +76,7 @@ class Shop:
             if choice == "0":
                 print("Leaving the shop.")
                 break
+            os.system("clear")
             self.buy_item(choice)
 
 
