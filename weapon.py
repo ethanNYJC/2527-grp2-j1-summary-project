@@ -53,27 +53,27 @@ sandpaper_scrap = Weapon(name="sandpaper scrap",
 slingshot = Weapon(name="slingshot",
                    description="reliable and sturdy.",
                    weapon_type="ranged",
-                   damage=5,
+                   damage=4,
                    evade_stat=5,
                    crit_stat=5,
                    armor_stat=0,
-                   value=15)
+                   value=20)
 
 bubble_wrap = Weapon(name="bubble wrap",
                      description="try not to pop this one, you need it to survive...",
                      weapon_type="special",
                      damage=2,
-                     evade_stat=10,
+                     evade_stat=5,
                      crit_stat=-10,
                      armor_stat=2,
-                     value=20)
+                     value=24)
 
 hand_sanitizer = Weapon(name="hand sanitizer",
                         description="kills 99.9 percent of germs, or so it says...",
                         weapon_type="special",
                         damage=4,
                         evade_stat=-10,
-                        crit_stat=30,
+                        crit_stat=25,
                         armor_stat=0,
                         value=24)
 

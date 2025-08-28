@@ -99,16 +99,16 @@ room_descriptions = {
 
 bed = Room('Bed', room_descriptions["bed"], [ant, ant])
 dollhouse = Room('Dollhouse', room_descriptions["dollhouse"], create_enemies())
-bookshelf = Room('Bookshelf', room_descriptions["bookshelf"], create_enemies())
+bookshelf = Room('Bookshelf', room_descriptions["bookshelf"], create_enemies() + [ladybug])
 under_bed = Room('Under the Bed', room_descriptions["under_bed"], create_enemies())
 rc_car = Room('RC Car', room_descriptions["rc_car"], create_enemies())
 dirty_clothes_mountain = Room('Dirty Clothes Mountain', room_descriptions["dirty_clothes_mountain"], create_enemies())
 gundam = Room('Gundam', room_descriptions["gundam"], create_enemies())
-lego_castle = Room('Lego Castle', room_descriptions["lego_castle"], create_enemies())
+lego_castle = Room('Lego Castle', room_descriptions["lego_castle"], create_enemies() + [ladybug])
 toy_train = Room('Toy Train', room_descriptions["toy_train"], create_enemies())
 piggy_bank = Room('Piggy Bank', room_descriptions["piggy_bank"], create_enemies())
-dustbin = Room('Dustbin', room_descriptions["dustbin"], create_enemies())
-pantry = Room('Pantry', room_descriptions["pantry"], [fat_rat])
+dustbin = Room('Dustbin', room_descriptions["dustbin"], create_enemies() + [ladybug])
+pantry = Room('Pantry', room_descriptions["pantry"], [toy_soldier, fat_rat])
 
 room_list = [bed, dollhouse, bookshelf, under_bed, rc_car, dirty_clothes_mountain, gundam, lego_castle, toy_train, piggy_bank, dustbin, pantry]
 
