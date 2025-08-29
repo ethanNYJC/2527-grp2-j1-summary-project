@@ -57,7 +57,7 @@ class Player(Character):
     def display_stats(self):
         super().display_stats()
         print(f'Crumbs: {self.crumbs}')
-
+    
     def set_weapon(self, new_weapon):
         self.weapon = new_weapon
 
@@ -81,7 +81,7 @@ class Enemy(Character):
         
 
 
-player = Player(name="ethan",
+player = Player(name="hero",
               health=100, 
               weapon=default, 
               evade_chance=10, 
@@ -113,10 +113,10 @@ dustmite = Enemy(name="dustmite",
                  loot=5)
 
 jumping_spider = Enemy(name="jumping spider",
-                       health=14,
+                       health=13,
                        weapon=sandpaper_scrap,
                        evade_chance=5,
-                       crit_chance=8,
+                       crit_chance=5,
                        armor=0,
                        loot=10)
 
@@ -131,17 +131,17 @@ centipede = Enemy(name="centipede",
 ladybug = Enemy(name="ladybug",
                 health=20,
                 weapon=hand_sanitizer,
-                evade_chance=5,
-                crit_chance=-5,
+                evade_chance=10,
+                crit_chance=0,
                 armor=0,
                 loot=10)
 
 toy_soldier = Enemy(name="toy soldier",
                     health=30,
                     weapon=bubble_wrap,
-                    evade_chance=-15,
-                    crit_chance=15,
-                    armor=0,
+                    evade_chance=0,
+                    crit_chance=20,
+                    armor=-1,
                     loot=15)
 
 fat_rat = Enemy(name="THE FAT RAT.",

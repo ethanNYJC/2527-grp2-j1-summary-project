@@ -91,6 +91,7 @@ def fight(player, enemy):
 
 def fight_room(room: Room):
     for i, enemy in enumerate(room.enemies, start = 1):
+        player.health_bar.update()
         fight(player, enemy)
         if i < len(room.enemies):
             print(f'\n{enemy.name} dropped {enemy.loot} crumbs!')
