@@ -58,7 +58,7 @@ class GameMap:
 
         print(f'\navailable exits:{connected_rooms}')
 
-        direction = input(f'\nWhere do you want to go?')
+        direction = input(f'\nWhere do you want to go? ')
 
         while direction not in connected:
             os.system('clear')

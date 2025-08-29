@@ -147,9 +147,9 @@ toy_soldier = Enemy(name="toy soldier",
 fat_rat = Enemy(name="THE FAT RAT.",
                 health=50,
                 weapon=slingshot,
-                evade_chance=-5,
-                crit_chance=10,
-                armor=2,
+                evade_chance=5,
+                crit_chance=15,
+                armor=1,
                 loot=0)
 
 enemy_list = [ant, ant, ant, ant, 
