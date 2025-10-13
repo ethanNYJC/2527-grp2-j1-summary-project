@@ -102,6 +102,10 @@ class Player(Character):
             print("Not enough crumbs!")
             return False
 
+    def take_crumbs(self, amount: int) -> None:
+        """Add the specified amount of crumbs to the player's total."""
+        self.crumbs += amount
+
     def heal(self, amount: int) -> None:
         """Heal the player by the specified amount.
         Player's health cannot exceed health_max.

@@ -29,7 +29,7 @@ def main():
         play()
     elif user_choice == 'Rules':
         print(text.game_rules)
-        input('Press "Enter" to return to home screen')
+        text.prompt_continue('Press "Enter" to return to home screen')
         main()
     elif user_choice == 'Quit':
         print('Thanks for playing')

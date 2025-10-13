@@ -52,18 +52,38 @@ error_msg = "Sorry, I dont understand the command"
 def clear():
     os.system('clear')
 
+
 def linebreak():
     print()
 
+
+def prompt_continue(prompt: str = "Press Enter to continue...") -> None:
+    """Prompt the user to press Enter to continue."""
+    input(prompt)
+
+
 def prompt_valid_choice(
-        options: list[str],
+        options: list[str] | dict[str],
         preamble: str | None = None,
         prompt: str = "Choose an option: "
 ) -> str:
+    """Prompt the user to select a valid choice from a list or dict of options.
+    
+    Args:
+        options: A list or dictionary of valid options.
+                 If a list is provided, the function returns the selected option.
+                 If a dictionary is provided, the function displays the value as additional detail of the key, and returns the key.
+        preamble: An optional string to display before the options.
+        prompt: The prompt string to display when asking for input.
+    """
     if preamble:
         print(preamble)
-    for i, option in enumerate(options, start=1):
-        print(f"{i}: {option}")
+    if isinstance(options, dict):
+        for i, (option, details) in enumerate(options.items(), start=1):
+            print(f"{i}: {option} ({details})")
+    elif isinstance(options, list):
+        for i, option in enumerate(options, start=1):
+            print(f"{i}: {option}")
     while True:
         choice = input(prompt)
         if choice.isdigit() and 1 <= int(choice) <= len(options):

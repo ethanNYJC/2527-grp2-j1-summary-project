@@ -32,7 +32,10 @@ class Room:
         if connected_rooms:
             for direction in self.connected_rooms:
                 self.connected_rooms[direction] = connected_rooms.get(direction)
-        self.entered = False  
+        self.entered = False
+
+    def get_direction(self, direction: str) -> str | None:
+        return self.connected_rooms[direction]
 
     def get_name(self):
         return self.name
@@ -43,7 +46,7 @@ class Room:
     def set_connected(self, direction: str, room):
         self.connected_rooms[direction] = room
 
-    def get_connected(self):
+    def get_connected_rooms(self) -> dict[str, str | None]:
         return self.connected_rooms
     
     def set_entered(self):

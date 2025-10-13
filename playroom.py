@@ -23,6 +23,31 @@ class Game:
         self.player = character.create_player()
         self.shop = shop.Shop(self.player)
         self.world = world.create_world()
+        self.current_room = None
+
+    def prompt_for_move(self) -> str:
+        """Prompt the player to choose a direction to move in."""
+        current_room = self.world.current_room
+        direction_options = {
+            direction: name
+            for direction, name in current_room.get_connected_rooms().items()
+            if name and not self.world.is_visited(name)
+        }
+        direction = text.prompt_valid_choice(
+            preamble="Available exits:",
+            options=direction_options,
+            prompt="Where do you want to go: "
+        )
+        text.clear()
+        return direction
+
+    def move_in_direction(self, direction: str) -> None:
+        """move in the specified direction"""
+        current_room = self.world.current_room
+        next_room = self.world.get_room(current_room.get_direction(direction))
+        current_room.set_entered()  
+        print(f"You move {direction}.\n")
+        self.current_room = next_room
 
     def equip_item(self, item: items.Weapon):
         self.player.replace_weapon(item)
@@ -140,25 +165,32 @@ class Game:
             
             self.player.health_bar.draw()
             enemy.health_bar.draw()
-            input(f'\t\t\b"press enter to attack"')
+            text.prompt_continue('\t\t\b"press enter to attack"')
             count += 1
 
     def fight_room(self, room: room.Room):
-        for i, enemy in enumerate(room.enemies, start=1):
+        for i, enemy_name in enumerate(room.enemies, start=1):
+            enemy = character.create_enemy(enemy_name)
             self.player.health_bar.update()
             self.fight(enemy)
             if i < len(room.enemies):
                 print(f'\n{enemy.name} dropped {enemy.loot} crumbs!')
-                input(f'press enter to fight the next enemy')
-        self.world.move()
+                self.player.take_crumbs(enemy.loot)
+                text.prompt_continue('press enter to fight the next enemy')
 
     def victory_screen(self):
         print(text.victory_msg)
 
     def run(self) -> None:
+        print(self.world.describe(self.current_room))
         while self.player.is_alive():
-            print(self.world.describe_current())
-            print(f'enemies in room: {[enemy.name for enemy in self.world.current_room.enemies]}\n')
-            input(f'press "Enter" to start your battle in {self.world.current_room.get_name()}')
-            self.fight_room(self.world.current_room)
+            current_room = self.current_room
+            print(f'enemies in room: {", ".join(current_room.enemies)}\n')
+            text.prompt_continue(
+                f'press "Enter" to start your battle in {current_room}'
+            )
+            self.fight_room(self.world.get_room(current_room))
+            direction = self.prompt_for_move()
+            self.move_in_direction(direction)
+            print(self.world.describe(self.current_room))
             self.visit_shop()

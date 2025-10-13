@@ -27,32 +27,18 @@ class World:
     def get_room(self, name: str) -> room.Room:
         return self.rooms[name]
 
-    def move(self):
-        """move to connected room"""
-        connected_rooms = []
-        connected = self.current_room.get_connected()
-        for key, value in connected.items():
-            if value is not None and not value.entered:
-                connected_rooms.append(f'{key} --> {value.name}')
+    def is_visited(self, name: str) -> bool:
+        return self.rooms[name].entered
 
-        print(f'\navailable exits:{connected_rooms}')
-
-        direction = text.prompt_valid_choice(
-            options=f"available exits:{connected_rooms}",
-            prompt="Where do you want to go: "
-        )
-        text.clear()
-        self.current_room = self.get_room(connected[direction])
-        self.current_room.set_entered()  
-        print(f"You move {direction}.\n")
-        print(self.describe_current())
-
-    def describe_current(self):
+    def describe(self, room_name: str) -> str:
         """return description of current room and exits"""
-        exits = []
-        connected = self.current_room.get_connected()
-        for key, value in connected.items():
-            if value is not None and not value.entered:
-                exits.append(f'{key} --> {value.name}')
-                
-        return f"{self.current_room.get_name()}: {self.current_room.get_description()}\nExits: {exits}"
+        the_room = self.get_room(room_name)
+        lines = [
+            the_room.name,
+            the_room.description,
+            "Exits:",
+        ]
+        for direction, room in the_room.get_connected_rooms().items():
+            if room is not None and not self.get_room(room).entered:
+                lines.append(f"{direction} --> {room}")
+        return "\n".join(lines)
