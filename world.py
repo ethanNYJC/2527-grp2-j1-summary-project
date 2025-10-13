@@ -2,7 +2,6 @@
 
 import data
 import room
-import text
 
 
 def create_world() -> "World":

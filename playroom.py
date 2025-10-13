@@ -84,7 +84,7 @@ class Game:
 
     def single_attack(self,
                       attacker: character.Character,
-                      defender: character.Character):
+                      defender: character.Character) -> dict:
         """Apply a single attack from the player to the enemy.
         
         Assume: enemy is alive, player is alive.
@@ -105,16 +105,15 @@ class Game:
             defender.take_damage(dmg)
         return result    
 
-    def fight(self, enemy: character.Enemy):
+    def fight(self, enemy: character.Enemy) -> bool:
         count = 0
 
         while True:
             text.clear()
             self.player.display_stats()
-            print("Xx" + "-"*54 + "xX")
-
+            text.divider()
             enemy.display_stats()
-            print("Xx" + "-"*54 + "xX")
+            text.divider()
 
             if count > 0:
                 if self.player.is_alive():
@@ -160,7 +159,7 @@ class Game:
                     print(f'final health: {self.player.health}/{self.player.health_max}')
                     print(f'no. of crumbs: {self.player.crumbs}')
                     return True
-                print("Xx" + "-"*54 + "xX")
+                text.divider()
 
             
             self.player.health_bar.draw()
@@ -168,7 +167,7 @@ class Game:
             text.prompt_continue('\t\t\b"press enter to attack"')
             count += 1
 
-    def fight_room(self, room: room.Room):
+    def fight_room(self, room: room.Room) -> None:
         for i, enemy_name in enumerate(room.enemies, start=1):
             enemy = character.create_enemy(enemy_name)
             self.player.health_bar.update()

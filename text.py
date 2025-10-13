@@ -49,12 +49,19 @@ error_msg = "Sorry, I dont understand the command"
 
 
 # clear terminal
-def clear():
+def clear() -> None:
+    """Clear the terminal screen."""
     os.system('clear')
 
 
-def linebreak():
+def linebreak() -> None:
+    """Print a line break."""
     print()
+
+
+def divider() -> None:
+    """Print a divider line."""
+    print("Xx" + "-"*54 + "xX")
 
 
 def prompt_continue(prompt: str = "Press Enter to continue...") -> None:
