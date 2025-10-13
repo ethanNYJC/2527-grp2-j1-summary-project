@@ -1,5 +1,3 @@
-import random
-
 import data
 from health_bar import HealthBar
 from weapon import Weapon, default, crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun, weapon_list
@@ -7,14 +5,6 @@ import weapon
 
 _player_data = data.gamedata["player"]
 _enemies_data = data.gamedata["enemies"]
-
-
-def roll_dice(num: int, denom: int) -> bool:
-    """Simulates a dice roll where the chance is num / denom.
-    Returns True if the roll succeeds, otherwise False.
-    """
-    roll = random.randint(1, denom)
-    return roll <= num
 
 
 def create_player() -> "Player":
@@ -43,7 +33,7 @@ def create_enemy(name: str) -> "Enemy":
 
 
 class Character:
-    def __init__(self, name, health, weapon: Weapon, evade_chance, crit_chance, armor) -> None:
+    def __init__(self, name, health, weapon, evade_chance, crit_chance, armor) -> None:
         self.name = name
         self.health = health
         self.health_max = health

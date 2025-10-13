@@ -54,3 +54,18 @@ def clear():
 
 def linebreak():
     print()
+
+def prompt_valid_choice(
+        options: list[str],
+        preamble: str | None = None,
+        prompt: str = "Choose an option: "
+) -> str:
+    if preamble:
+        print(preamble)
+    for i, option in enumerate(options, start=1):
+        print(f"{i}: {option}")
+    while True:
+        choice = input(prompt)
+        if choice.isdigit() and 1 <= int(choice) <= len(options):
+            return options[int(choice) - 1]
+        print("Invalid choice. Please try again.")
