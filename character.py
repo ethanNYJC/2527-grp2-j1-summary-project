@@ -1,6 +1,5 @@
 import data
 from health_bar import HealthBar
-from weapon import Weapon, default, crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun, weapon_list
 import weapon
 
 _player_data = data.gamedata["player"]
@@ -71,7 +70,7 @@ class Character:
 
         
 class Player(Character):
-    def __init__(self, name, health, weapon: Weapon, evade_chance, crit_chance, armor):
+    def __init__(self, name, health, weapon, evade_chance, crit_chance, armor):
         super().__init__(name, health, weapon, evade_chance, crit_chance, armor)
         self.health_bar = HealthBar(self, color="green")
         self.crumbs = 0

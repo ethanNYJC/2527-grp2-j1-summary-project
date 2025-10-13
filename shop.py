@@ -1,16 +1,16 @@
 import os
 import random
 
-from character import Character, Player, player
-from weapon import Weapon, weapon_list
+import data
+import weapon
 
 
 class Shop:
     def __init__(self, player):
         self.player = player
-        self.weapons = weapon_list
+        self.weapons = data.weapon_names
     
-    def display_stats(self, weapon: Weapon):
+    def display_stats(self, weapon: weapon.Weapon):
         print(f'  [{weapon.damage_min}-{weapon.damage_max} damage]')
         if weapon.evade_stat != 0:
             print(f'  [{weapon.evade_stat}% evade chance]')
@@ -21,16 +21,16 @@ class Shop:
 
     def refresh_shop(self):
         global weapon_slot1
-        weapon_slot1 = random.choice(weapon_list)
+        weapon_slot1 = random.choice(self.weapons)
 
         global weapon_slot2
-        weapon_slot2 = random.choice(weapon_list)
+        weapon_slot2 = random.choice(self.weapons)
 
     def display_shop(self):
         print("\n=== 🛒 Welcome to the Shop ===")
-        print(f'current health: {player.health}')
-        print(f'current weapon: {player.weapon.name}')
-        print(f"no. of crumbs: {player.crumbs}\n")
+        print(f'current health: {self.player.health}')
+        print(f'current weapon: {self.player.weapon.name}')
+        print(f"no. of crumbs: {self.player.crumbs}\n")
         print("\n-- Weapons --")
 
         
@@ -46,23 +46,23 @@ class Shop:
 
     def buy_item(self, choice):
         if choice == "1":
-            if player.crumbs >= weapon_slot1.value: 
-                player.crumbs -= weapon_slot1.value
-                player.replace_weapon(weapon_slot1)
+            if self.player.crumbs >= weapon_slot1.value: 
+                self.player.crumbs -= weapon_slot1.value
+                self.player.replace_weapon(weapon_slot1)
             else:
                 print("you don't have enough crumbs for this item.")
 
         elif choice == "2":
-            if player.crumbs >= weapon_slot2.value:
-                player.crumbs -= weapon_slot2.value
-                player.replace_weapon(weapon_slot2)
+            if self.player.crumbs >= weapon_slot2.value:
+                self.player.crumbs -= weapon_slot2.value
+                self.player.replace_weapon(weapon_slot2)
             else:
                 print("you don't have enough crumbs for this item.")
 
         elif choice == "3":
-            if player.crumbs >= 3:
-                player.crumbs -= 3
-                player.health = min(player.health + 10, 100)
+            if self.player.crumbs >= 3:
+                self.player.crumbs -= 3
+                self.player.health = min(self.player.health + 10, 100)
                 print(f'you used fried egg and gained 10 health.')
             else:
                 print("you don't have enough crumbs for this item.")
@@ -81,7 +81,3 @@ class Shop:
                 break
             os.system("clear")
             self.buy_item(choice)
-
-
-
-shop = Shop(player)
