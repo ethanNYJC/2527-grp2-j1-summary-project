@@ -1,6 +1,6 @@
 import data
 from health_bar import HealthBar
-import weapon
+import items
 
 _player_data = data.gamedata["player"]
 _enemies_data = data.gamedata["enemies"]
@@ -23,7 +23,7 @@ def create_enemy(name: str) -> "Enemy":
     return Enemy(
         name=data["name"],
         health=data["health"],
-        weapon=weapon.create_weapon(data["weapon"]),
+        weapon=item.create_weapon(data["weapon"]),
         evade_chance=data["evade_chance"],
         crit_chance=data["crit_chance"],
         armor=data["armor"],
@@ -32,7 +32,13 @@ def create_enemy(name: str) -> "Enemy":
 
 
 class Character:
-    def __init__(self, name, health, weapon, evade_chance, crit_chance, armor) -> None:
+    def __init__(self,
+                 name: str,
+                 health: int,
+                 weapon: str,
+                 evade_chance: int,
+                 crit_chance: int,
+                 armor: int) -> None:
         self.name = name
         self.health = health
         self.health_max = health
@@ -40,10 +46,10 @@ class Character:
         self.crit_chance = crit_chance
         self.armor = armor
 
-        self.weapon = weapon
-        self.weapon_evade = weapon.evade_stat
-        self.weapon_crit = weapon.crit_stat
-        self.weapon_armor = weapon.armor_stat
+        self.weapon = items.create_weapon(weapon)
+        self.weapon_evade = self.weapon.evade_stat
+        self.weapon_crit = self.weapon.crit_stat
+        self.weapon_armor = self.weapon.armor_stat
 
         self.total_evade = (self.evade_chance + self.weapon.evade_stat)
         self.total_crit = (self.crit_chance + self.weapon.crit_stat)
@@ -70,7 +76,13 @@ class Character:
 
         
 class Player(Character):
-    def __init__(self, name, health, weapon, evade_chance, crit_chance, armor):
+    def __init__(self,
+                 name: str,
+                 health: int,
+                 weapon: str,
+                 evade_chance: int,
+                 crit_chance: int,
+                 armor: int):
         super().__init__(name, health, weapon, evade_chance, crit_chance, armor)
         self.health_bar = HealthBar(self, color="green")
         self.crumbs = 0
@@ -78,7 +90,26 @@ class Player(Character):
     def display_stats(self):
         super().display_stats()
         print(f'Crumbs: {self.crumbs}')
-    
+
+    def pay(self, amount: int) -> bool:
+        """Attempt to pay the specified amount of crumbs.
+        Returns True if the payment was successful, otherwise False.
+        """
+        if self.crumbs >= amount:
+            self.crumbs -= amount
+            return True
+        else:
+            print("Not enough crumbs!")
+            return False
+
+    def heal(self, amount: int) -> None:
+        """Heal the player by the specified amount.
+        Player's health cannot exceed health_max.
+        """
+        self.health += amount
+        self.health = min(self.health, self.health_max)
+        self.health_bar.update()
+
     def set_weapon(self, new_weapon):
         self.weapon = new_weapon
 
@@ -93,10 +124,17 @@ class Player(Character):
 
 
 class Enemy(Character):
-    def __init__(self, name, health, weapon, evade_chance, crit_chance, armor, loot):
+    def __init__(self,
+                 name: str,
+                 health: int,
+                 weapon: str,
+                 evade_chance: int,
+                 crit_chance: int,
+                 armor: int,
+                 loot: list[str]):
         super().__init__(name, health, weapon, evade_chance, crit_chance, armor)
-        self.loot = loot
         self.health_bar = HealthBar(self, color="red")
+        self.loot = loot
 
     def display_stats(self):
         super().display_stats()

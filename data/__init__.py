@@ -16,5 +16,6 @@ def load_gamedata() -> dict:
 
 gamedata = load_gamedata()
 room_names = list(gamedata["rooms"])
-weapon_names = [weapon["name"] for weapon in gamedata["weapons"]]
+consumable_names = [consumable["name"] for consumable in gamedata["items"]["consumables"]]
+weapon_names = [weapon["name"] for weapon in gamedata["items"]["weapons"]]
 enemy_names = [enemy["name"] for enemy in gamedata["enemies"]]

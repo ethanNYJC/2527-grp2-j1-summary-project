@@ -81,98 +81,108 @@
       "loot": 0
     }
   ],
-  "weapons": [
-    {
-      "name": "fists",
-      "description": "your good old hands",
-      "weapon_type": "melee",
-      "damage": 2,
-      "evade_stat": 0,
-      "crit_stat": 0,
-      "armor_stat": 0,
-      "value": 0
-    },
-    {
-      "name": "crayon",
-      "description": "a colorful addition to your arsenal",
-      "weapon_type": "melee",
-      "damage": 3,
-      "evade_stat": 0,
-      "crit_stat": 10,
-      "armor_stat": 0,
-      "value": 10
-    },
-    {
-      "name": "staple bullet",
-      "description": "careful not to prick your fingers!",
-      "weapon_type": "ranged",
-      "damage": 3,
-      "evade_stat": 10,
-      "crit_stat": 0,
-      "armor_stat": 0,
-      "value": 10
-    },
-    {
-      "name": "sandpaper scrap",
-      "description": "maybe you can wrap it around your hands?",
-      "weapon_type": "melee",
-      "damage": 3,
-      "evade_stat": 0,
-      "crit_stat": 5,
-      "armor_stat": 1,
-      "value": 20
-    },
-    {
-      "name": "slingshot",
-      "description": "reliable and sturdy.",
-      "weapon_type": "ranged",
-      "damage": 4,
-      "evade_stat": 5,
-      "crit_stat": 5,
-      "armor_stat": 0,
-      "value": 20
-    },
-    {
-      "name": "bubble wrap",
-      "description": "try not to pop this one, you need it to survive...",
-      "weapon_type": "special",
-      "damage": 2,
-      "evade_stat": 0,
-      "crit_stat": -10,
-      "armor_stat": 2,
-      "value": 22
-    },
-    {
-      "name": "hand sanitizer",
-      "description": "kills 99.9 percent of germs, or so it says...",
-      "weapon_type": "special",
-      "damage": 4,
-      "evade_stat": -10,
-      "crit_stat": 25,
-      "armor_stat": 0,
-      "value": 24
-    },
-    {
-      "name": "chicken bone",
-      "description": "rotten and teri-fryingly strong",
-      "weapon_type": "melee",
-      "damage": 5,
-      "evade_stat": 0,
-      "crit_stat": 30,
-      "armor_stat": 0,
-      "value": 30
-    },
-    {
-      "name": "ketchup gun",
-      "description": "ronald mcdonald would approve. ba-da-ba-ba-ba",
-      "weapon_type": "ranged",
-      "damage": 3,
-      "evade_stat": 40,
-      "crit_stat": 20,
-      "armor_stat": 0,
-      "value": 30
-    }
-  ],
+  "items": {
+    "consumables": [
+        {
+          "name": "fried egg",
+          "description": "restores 10 health",
+          "health_restore": 10,
+          "value": 3
+        }
+    ],
+    "weapons": [
+        {
+          "name": "fists",
+          "description": "your good old hands",
+          "weapon_type": "melee",
+          "damage": 2,
+          "evade_stat": 0,
+          "crit_stat": 0,
+          "armor_stat": 0,
+          "value": 0
+        },
+        {
+          "name": "crayon",
+          "description": "a colorful addition to your arsenal",
+          "weapon_type": "melee",
+          "damage": 3,
+          "evade_stat": 0,
+          "crit_stat": 10,
+          "armor_stat": 0,
+          "value": 10
+        },
+        {
+          "name": "staple bullet",
+          "description": "careful not to prick your fingers!",
+          "weapon_type": "ranged",
+          "damage": 3,
+          "evade_stat": 10,
+          "crit_stat": 0,
+          "armor_stat": 0,
+          "value": 10
+        },
+        {
+          "name": "sandpaper scrap",
+          "description": "maybe you can wrap it around your hands?",
+          "weapon_type": "melee",
+          "damage": 3,
+          "evade_stat": 0,
+          "crit_stat": 5,
+          "armor_stat": 1,
+          "value": 20
+        },
+        {
+          "name": "slingshot",
+          "description": "reliable and sturdy.",
+          "weapon_type": "ranged",
+          "damage": 4,
+          "evade_stat": 5,
+          "crit_stat": 5,
+          "armor_stat": 0,
+          "value": 20
+        },
+        {
+          "name": "bubble wrap",
+          "description": "try not to pop this one, you need it to survive...",
+          "weapon_type": "special",
+          "damage": 2,
+          "evade_stat": 0,
+          "crit_stat": -10,
+          "armor_stat": 2,
+          "value": 22
+        },
+        {
+          "name": "hand sanitizer",
+          "description": "kills 99.9 percent of germs, or so it says...",
+          "weapon_type": "special",
+          "damage": 4,
+          "evade_stat": -10,
+          "crit_stat": 25,
+          "armor_stat": 0,
+          "value": 24
+        },
+        {
+          "name": "chicken bone",
+          "description": "rotten and teri-fryingly strong",
+          "weapon_type": "melee",
+          "damage": 5,
+          "evade_stat": 0,
+          "crit_stat": 30,
+          "armor_stat": 0,
+          "value": 30
+        },
+        {
+          "name": "ketchup gun",
+          "description": "ronald mcdonald would approve. ba-da-ba-ba-ba",
+          "weapon_type": "ranged",
+          "damage": 3,
+          "evade_stat": 40,
+          "crit_stat": 20,
+          "armor_stat": 0,
+          "value": 30
+        }
+      ]
+  },
   "rooms": [
     {
       "name": "Bed",

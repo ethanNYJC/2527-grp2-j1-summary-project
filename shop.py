@@ -1,35 +1,30 @@
-import os
 import random
 
+import character
 import data
 import text
-import weapon
+import items
 
 
-def _random_weapon() -> weapon.Weapon:
+def _random_weapon() -> items.Weapon:
     weapon_name = random.choice(data.weapon_names)
-    return weapon.create_weapon(weapon_name)
+    return items.create_weapon(weapon_name)
 
 
 class Shop:
-    def __init__(self, player):
+    def __init__(self, player: character.Player):
         self.player = player
-        self.items = {
+        self.items: dict[str, items.Item] = {
             "slot1": _random_weapon(),
-            "slot2": _random_weapon()
+            "slot2": _random_weapon(),
+            "slot3": items.create_consumable("fried egg")
         }
 
-    def display_cost(self, item: weapon.Weapon) -> None:
+    def display_cost(self, item: items.Item) -> None:
         print(f"1. {item.name} - {item.value} crumbs")
-    
-    def display_stats(self, weapon: weapon.Weapon) -> None:
-        print(f'  [{weapon.damage_min}-{weapon.damage_max} damage]')
-        if weapon.evade_stat != 0:
-            print(f'  [{weapon.evade_stat}% evade chance]')
-        if weapon.crit_stat != 0:
-            print(f'  [{weapon.crit_stat}% crit chance]')
-        if weapon.armor_stat != 0:
-            print(f'  [+{weapon.armor_stat} armor]')
+
+    def display_stats(self, item: items.Item) -> None:
+        print(item.get_stats_string())
 
     def refresh_shop(self):
         self.items["slot1"] = _random_weapon()
@@ -50,32 +45,27 @@ class Shop:
         print(f'  [+10 health]')
         print("0. Exit Shop")
 
-    def buy_item(self, choice: str):
+    def buy_item(self, choice: str) -> None:
         if choice == self.items["slot1"].name:
-            if self.player.crumbs >= self.items["slot1"].value:
-                self.player.crumbs -= self.items["slot1"].value
-                self.player.replace_weapon(self.items["slot1"])
-            else:
-                print("you don't have enough crumbs for this item.")
-
+            item = self.items["slot1"]
         elif choice == self.items["slot2"].name:
-            if self.player.crumbs >= self.items["slot2"].value:
-                self.player.crumbs -= self.items["slot2"].value
-                self.player.replace_weapon(self.items["slot2"])
-            else:
-                print("you don't have enough crumbs for this item.")
-
+            item = self.items["slot2"]
         elif choice == "fried egg":
-            if self.player.crumbs >= 3:
-                self.player.crumbs -= 3
-                self.player.health = min(self.player.health + 10, 100)
-                print(f'you used fried egg and gained 10 health.')
-            else:
-                print("you don't have enough crumbs for this item.")
-
+            item = items.create_consumable("fried egg")
         else:
             print("Invalid choice.")
             return
+
+        if not self.player.pay(item.value):
+            print("you don't have enough crumbs for this item.")
+            return
+        if isinstance(item, items.Weapon):
+            self.player.replace_weapon(item)
+        elif isinstance(item, items.Consumable):
+            self.player.heal(item.health_restore)
+            print(
+                f"you used {item.name} and gained {item.health_restore} health."
+            )
         
     def open(self):
         self.refresh_shop()
