@@ -1,6 +1,7 @@
 """The main game logic."""
 
 import random
+from typing import Any
 
 import character
 import config
@@ -17,6 +18,14 @@ def roll_dice(num: int, denom: int) -> bool:
     """
     roll = random.randint(1, denom)
     return roll <= num
+
+
+def roll_damage(damage: int) -> int:
+    """Simulates rolling for damage.
+    Damage is a random integer between damage - 1 and damage + 1, inclusive.
+    Minimum damage is 1.
+    """
+    return random.randint(max(damage - 1, 1), damage + 1)
 
 
 class Game:
@@ -65,7 +74,11 @@ class Game:
 
     def transact(self, choice: str) -> None:
         """Handles the transaction of buying and using/equipping an item."""
-        if not self.player.pay(self.shop.peek_item(choice).value):
+        peeked_item = self.shop.peek_item(choice)
+        if peeked_item is None:
+            print("Sorry, that item is not available.")
+            return
+        if not self.player.pay(peeked_item.value):
             print("you don't have enough crumbs for this item.")
             return
         item = self.shop.pop_item(choice)
@@ -95,14 +108,19 @@ class Game:
         
         Assume: enemy is alive, player is alive.
         """
-        result = {
+        result: dict[str, Any] = {
             "attacker": "player",
             "defender": "enemy"
         }
-        result["evade"] = roll_dice(defender.total_evade, 100)
+        result["evade"] = roll_dice(defender.calculate_evade(), 100)
 
-        dmg = max(attacker.weapon.damage - defender.total_armor, 0)
-        result["crit"] = roll_dice(attacker.total_crit, 100)
+        attacker_damage = attacker.calculate_damage()
+        defender_armor = defender.calculate_armor()
+        dmg = (
+            attacker_damage - defender_armor
+            if attacker_damage > defender_armor else 0
+        )
+        result["crit"] = roll_dice(attacker.calculate_crit(), 100)
 
         if result["crit"]:
             dmg *= 2

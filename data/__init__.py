@@ -4,6 +4,7 @@ import json
 
 import config
 
+
 def load_json(file_path) -> dict:
     """Load JSON data from a file."""
     with open(file_path, "r") as f:

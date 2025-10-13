@@ -48,21 +48,26 @@ class Character:
         self.armor = armor
 
         self.weapon = items.create_weapon(weapon)
-        self.weapon_evade = self.weapon.evade_stat
-        self.weapon_crit = self.weapon.crit_stat
-        self.weapon_armor = self.weapon.armor_stat
 
-        self.total_evade = (self.evade_chance + self.weapon.evade_stat)
-        self.total_crit = (self.crit_chance + self.weapon.crit_stat)
-        self.total_armor = (self.armor + self.weapon.armor_stat)
+    def calculate_damage(self) -> int:
+        return self.weapon.damage
+
+    def calculate_evade(self) -> int:
+        return self.evade_chance + self.weapon.evade_stat
+
+    def calculate_crit(self) -> int:
+        return self.crit_chance + self.weapon.crit_stat
+
+    def calculate_armor(self) -> int:
+        return self.armor + self.weapon.armor_stat
 
     def display_stats(self):
         print(f'Name: {self.name}')
-        print(f'Damage = {self.weapon.damage_min}-{self.weapon.damage_max}')
-        print(f"Evade Chance = {self.total_evade}%")
-        print(f'Crit Chance = {self.total_crit}%')
-        if self.total_armor > 0:
-            print(f'Armor: {self.total_armor}')
+        print(f'Damage = {self.calculate_damage()}')
+        print(f"Evade Chance = {self.calculate_evade()}%")
+        print(f'Crit Chance = {self.calculate_crit()}%')
+        if self.calculate_armor() > 0:
+            print(f'Armor: {self.calculate_armor()}')
 
     def is_alive(self):
         return self.health > 0

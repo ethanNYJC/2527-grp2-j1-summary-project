@@ -70,15 +70,14 @@ class Weapon(Item):
                  value: int):
         super().__init__(name, description, value)
         self.weapon_type = weapon_type
-        self.damage_min = max(damage - 1, 1)
-        self.damage_max = damage + 1
+        self.damage = damage
         self.evade_stat = evade_stat
         self.crit_stat = crit_stat
         self.armor_stat = armor_stat
 
     def get_stats_string(self) -> str:
         stats = []
-        stats.append(f"Damage: {self.damage_min}-{self.damage_max}")
+        stats.append(f"Damage: {self.damage}")
         if self.evade_stat != 0:
             stats.append(f"Evade Chance: {self.evade_stat}%")
         if self.crit_stat != 0:
@@ -86,7 +85,3 @@ class Weapon(Item):
         if self.armor_stat != 0:
             stats.append(f"Armor: {self.armor_stat}")
         return "\n".join(stats)
-
-    @property
-    def damage(self):
-        return random.randint(self.damage_min, self.damage_max)
