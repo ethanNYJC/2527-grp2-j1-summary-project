@@ -3,6 +3,7 @@
 import random
 
 import character
+import items
 import room
 import shop
 import text
@@ -22,6 +23,39 @@ class Game:
         self.player = character.create_player()
         self.shop = shop.Shop(self.player)
         self.world = world.create_world()
+
+    def equip_item(self, item: items.Weapon):
+        self.player.replace_weapon(item)
+        print(f'you equipped {item.name}!')
+
+    def consume_item(self, item: items.Consumable):
+        self.player.heal(item.health_restore)
+        print(f'you used {item.name} and gained {item.health_restore} health.')
+
+    def transact(self, choice: str) -> None:
+        """Handles the transaction of buying and using/equipping an item."""
+        if not self.player.pay(self.shop.peek_item(choice).value):
+            print("you don't have enough crumbs for this item.")
+            return
+        item = self.shop.pop_item(choice)
+        if isinstance(item, items.Weapon):
+            self.equip_item(item)
+        elif isinstance(item, items.Consumable):
+            self.consume_item(item)
+    
+    def visit_shop(self):
+        """Handles the shop visit process."""
+        self.shop.refresh()
+        choice = None
+        while choice != "exit":
+            self.shop.display_items()
+            choice = text.prompt_valid_choice(
+                options=self.shop.get_options() + ["exit"],
+                prompt="Choose an item to buy: "
+            )
+            text.clear()
+            if choice != "exit":
+                self.transact(choice)
 
     def single_attack(self,
                       attacker: character.Character,
@@ -127,4 +161,4 @@ class Game:
             print(f'enemies in room: {[enemy.name for enemy in self.world.current_room.enemies]}\n')
             input(f'press "Enter" to start your battle in {self.world.current_room.get_name()}')
             self.fight_room(self.world.current_room)
-            self.shop.open()
+            self.visit_shop()

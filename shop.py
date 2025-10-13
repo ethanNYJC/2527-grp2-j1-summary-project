@@ -26,60 +26,56 @@ class Shop:
     def display_stats(self, item: items.Item) -> None:
         print(item.get_stats_string())
 
-    def refresh_shop(self):
+    def refresh(self):
         self.items["slot1"] = _random_weapon()
         self.items["slot2"] = _random_weapon()
 
-    def display_shop(self):
+    def display_items(self):
         print("\n=== 🛒 Welcome to the Shop ===")
         print(f'current health: {self.player.health}')
         print(f'current weapon: {self.player.weapon.name}')
         print(f"no. of crumbs: {self.player.crumbs}\n")
         print("\n-- Weapons --")
 
-        self.display_cost(self.items['slot1'])
-        self.display_stats(self.items['slot1'])
-        self.display_cost(self.items['slot2'])
-        self.display_stats(self.items['slot2'])
+        if self.items["slot1"] is not None:
+            self.display_cost(self.items['slot1'])
+            self.display_stats(self.items['slot1'])
+        if self.items["slot2"] is not None:
+            self.display_cost(self.items['slot2'])
+            self.display_stats(self.items['slot2'])
         print(f"3. fried egg - 3 crumbs")
         print(f'  [+10 health]')
         print("0. Exit Shop")
 
-    def buy_item(self, choice: str) -> None:
+    def get_options(self) -> list[str]:
+        return [
+            self.items["slot1"].name,
+            self.items["slot2"].name,
+            "fried egg",
+        ]
+
+    def peek_item(self, choice: str) -> items.Item | None:
+        """Returns the item corresponding to the choice without removing it from the shop."""
+        if choice == self.items["slot1"].name:
+            return self.items["slot1"]
+        elif choice == self.items["slot2"].name:
+            return self.items["slot2"]
+        elif choice == "fried egg":
+            return items.create_consumable("fried egg")
+        else:
+            print("Invalid choice.")
+            return None
+
+    def pop_item(self, choice: str) -> items.Item:
+        """Returns and removes the item corresponding to the choice from the shop."""
         if choice == self.items["slot1"].name:
             item = self.items["slot1"]
+            self.items["slot1"] = None
         elif choice == self.items["slot2"].name:
             item = self.items["slot2"]
+            self.items["slot2"] = None
         elif choice == "fried egg":
             item = items.create_consumable("fried egg")
         else:
-            print("Invalid choice.")
-            return
-
-        if not self.player.pay(item.value):
-            print("you don't have enough crumbs for this item.")
-            return
-        if isinstance(item, items.Weapon):
-            self.player.replace_weapon(item)
-        elif isinstance(item, items.Consumable):
-            self.player.heal(item.health_restore)
-            print(
-                f"you used {item.name} and gained {item.health_restore} health."
-            )
-        
-    def open(self):
-        self.refresh_shop()
-        choice = None
-        while choice != "exit":
-            self.display_shop()
-            text.prompt_valid_choice(
-                options=[
-                    self.items["slot1"].name,
-                    self.items["slot2"].name,
-                    "fried egg",
-                    "exit"
-                ],
-                prompt="Choose an item to buy: "
-            )
-            text.clear()
-            self.buy_item(choice)
+            raise ValueError("Invalid choice.")
+        return item
