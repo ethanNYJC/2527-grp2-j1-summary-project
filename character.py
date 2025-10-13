@@ -10,7 +10,7 @@ def create_player() -> "Player":
     player = Player(
         name=_player_data["name"],
         health=_player_data["health"],
-        weapon=globals()[_player_data["weapon"].replace(" ", "_").lower()],
+        weapon=_player_data["starting_weapon"],
         evade_chance=_player_data["evade_chance"],
         crit_chance=_player_data["crit_chance"],
         armor=_player_data["armor"]
@@ -20,14 +20,15 @@ def create_player() -> "Player":
 def create_enemy(name: str) -> "Enemy":
     if name not in data.enemy_names:
         raise ValueError(f"Enemy '{name}' not found in enemies_data.")
+    enemy_data = data.gamedata["enemies"][name]
     return Enemy(
-        name=data["name"],
-        health=data["health"],
-        weapon=item.create_weapon(data["weapon"]),
-        evade_chance=data["evade_chance"],
-        crit_chance=data["crit_chance"],
-        armor=data["armor"],
-        loot=data["loot"]
+        name=enemy_data["name"],
+        health=enemy_data["health"],
+        weapon=enemy_data["weapon"],
+        evade_chance=enemy_data["evade_chance"],
+        crit_chance=enemy_data["crit_chance"],
+        armor=enemy_data["armor"],
+        loot=enemy_data["loot"]
     )
 
 
@@ -72,7 +73,6 @@ class Character:
         """
         self.health -= dmg
         self.health = max(self.health, 0)
-        self.health_bar.update()
 
         
 class Player(Character):
@@ -105,6 +105,14 @@ class Player(Character):
     def take_crumbs(self, amount: int) -> None:
         """Add the specified amount of crumbs to the player's total."""
         self.crumbs += amount
+
+    def take_damage(self, dmg: int) -> None:
+        """Apply dmg to the player's health.
+        Player's health cannot fall below 0.
+        Update the health bar after taking damage.
+        """
+        super().take_damage(dmg)
+        self.health_bar.update()
 
     def heal(self, amount: int) -> None:
         """Heal the player by the specified amount.
@@ -139,6 +147,14 @@ class Enemy(Character):
         super().__init__(name, health, weapon, evade_chance, crit_chance, armor)
         self.health_bar = HealthBar(self, color="red")
         self.loot = loot
+
+    def take_damage(self, dmg: int) -> None:
+        """Apply dmg to the enemy's health.
+        Enemy's health cannot fall below 0.
+        Update the health bar after taking damage.
+        """
+        super().take_damage(dmg)
+        self.health_bar.update()
 
     def display_stats(self):
         super().display_stats()
