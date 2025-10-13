@@ -14,7 +14,7 @@ def _random_weapon() -> items.Weapon:
 class Shop:
     def __init__(self, player: character.Player):
         self.player = player
-        self.items: dict[str, items.Item] = {
+        self.items: dict[str, items.Item | None] = {
             "slot1": _random_weapon(),
             "slot2": _random_weapon(),
             "slot3": items.create_consumable("fried egg")
@@ -48,17 +48,19 @@ class Shop:
         print("0. Exit Shop")
 
     def get_options(self) -> list[str]:
-        return [
-            self.items["slot1"].name,
-            self.items["slot2"].name,
-            "fried egg",
-        ]
+        options = []
+        if self.items["slot1"] is not None:
+            options.append(self.items["slot1"].name)
+        if self.items["slot2"] is not None:
+            options.append(self.items["slot2"].name)
+        options.append("fried egg")
+        return options
 
     def peek_item(self, choice: str) -> items.Item | None:
         """Returns the item corresponding to the choice without removing it from the shop."""
-        if choice == self.items["slot1"].name:
+        if self.items["slot1"] and choice == self.items["slot1"].name:
             return self.items["slot1"]
-        elif choice == self.items["slot2"].name:
+        elif self.items["slot2"] and choice == self.items["slot2"].name:
             return self.items["slot2"]
         elif choice == "fried egg":
             return items.create_consumable("fried egg")
@@ -68,10 +70,10 @@ class Shop:
 
     def pop_item(self, choice: str) -> items.Item:
         """Returns and removes the item corresponding to the choice from the shop."""
-        if choice == self.items["slot1"].name:
+        if self.items["slot1"] and choice == self.items["slot1"].name:
             item = self.items["slot1"]
             self.items["slot1"] = None
-        elif choice == self.items["slot2"].name:
+        elif self.items["slot2"] and choice == self.items["slot2"].name:
             item = self.items["slot2"]
             self.items["slot2"] = None
         elif choice == "fried egg":

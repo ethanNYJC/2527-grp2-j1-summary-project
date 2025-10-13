@@ -70,7 +70,7 @@ def prompt_continue(prompt: str = "Press Enter to continue...") -> None:
 
 
 def prompt_valid_choice(
-        options: list[str] | dict[str],
+        options: list[str] | dict[str, str],
         preamble: str | None = None,
         prompt: str = "Choose an option: "
 ) -> str:
@@ -94,5 +94,8 @@ def prompt_valid_choice(
     while True:
         choice = input(prompt)
         if choice.isdigit() and 1 <= int(choice) <= len(options):
-            return options[int(choice) - 1]
+            if isinstance(options, dict):
+                return list(options.keys())[int(choice) - 1]
+            else:
+                return options[int(choice) - 1]
         print("Invalid choice. Please try again.")

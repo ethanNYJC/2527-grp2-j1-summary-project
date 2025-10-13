@@ -8,26 +8,28 @@ _weapons_data = data.gamedata["weapons"]
 def create_consumable(name: str) -> "Consumable":
     if name not in data.consumable_names:
         raise ValueError(f"Consumable '{name}' not found in consumables_data.")
+    consumable_data = data.gamedata["consumables"][name]
     return Consumable(
-        name=data["name"],
-        description=data["description"],
-        health_restore=data["health_restore"],
-        value=data["value"]
+        name=consumable_data["name"],
+        description=consumable_data["description"],
+        health_restore=consumable_data["health_restore"],
+        value=consumable_data["value"]
     )
 
 
 def create_weapon(name: str) -> "Weapon":
     if name not in data.weapon_names:
         raise ValueError(f"Weapon '{name}' not found in weapons_data.")
+    weapon_data = data.gamedata["weapons"][name]
     return Weapon(
-        name=data["name"],
-        description=data["description"],
-        weapon_type=data["weapon_type"],
-        damage=data["damage"],
-        evade_stat=data["evade_stat"],
-        crit_stat=data["crit_stat"],
-        armor_stat=data["armor_stat"],
-        value=data["value"]
+        name=weapon_data["name"],
+        description=weapon_data["description"],
+        weapon_type=weapon_data["weapon_type"],
+        damage=weapon_data["damage"],
+        evade_stat=weapon_data["evade_stat"],
+        crit_stat=weapon_data["crit_stat"],
+        armor_stat=weapon_data["armor_stat"],
+        value=weapon_data["value"]
     )
 
 
