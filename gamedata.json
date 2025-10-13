@@ -1,0 +1,249 @@
+{
+  "player": {
+    "name": "hero",
+    "health": 100,
+    "weapon": "default",
+    "evade_chance": 10,
+    "crit_chance": 10,
+    "armor": 0
+  },
+  "enemies": [
+    {
+      "name": "ant",
+      "health": 8,
+      "weapon": "default",
+      "evade_chance": 0,
+      "crit_chance": 0,
+      "armor": 0,
+      "loot": 3
+    },
+    {
+      "name": "flying cockroach",
+      "health": 12,
+      "weapon": "staple bullet",
+      "evade_chance": 15,
+      "crit_chance": 4,
+      "armor": 0,
+      "loot": 8
+    },
+    {
+      "name": "dustmite",
+      "health": 8,
+      "weapon": "crayon",
+      "evade_chance": 10,
+      "crit_chance": 5,
+      "armor": 0,
+      "loot": 5
+    },
+    {
+      "name": "jumping spider",
+      "health": 13,
+      "weapon": "sandpaper scrap",
+      "evade_chance": 5,
+      "crit_chance": 5,
+      "armor": 0,
+      "loot": 10
+    },
+    {
+      "name": "centipede",
+      "health": 30,
+      "weapon": "default",
+      "evade_chance": 0,
+      "crit_chance": 15,
+      "armor": 0,
+      "loot": 10
+    },
+    {
+      "name": "ladybug",
+      "health": 20,
+      "weapon": "hand sanitizer",
+      "evade_chance": 10,
+      "crit_chance": 0,
+      "armor": 0,
+      "loot": 10
+    },
+    {
+      "name": "toy soldier",
+      "health": 30,
+      "weapon": "bubble wrap",
+      "evade_chance": 0,
+      "crit_chance": 20,
+      "armor": -1,
+      "loot": 15
+    },
+    {
+      "name": "THE FAT RAT.",
+      "health": 50,
+      "weapon": "slingshot",
+      "evade_chance": -5,
+      "crit_chance": 10,
+      "armor": 2,
+      "loot": 0
+    }
+  ],
+  "weapons": [
+    {
+      "name": "fists",
+      "description": "your good old hands",
+      "weapon_type": "melee",
+      "damage": 2,
+      "evade_stat": 0,
+      "crit_stat": 0,
+      "armor_stat": 0,
+      "value": 0
+    },
+    {
+      "name": "crayon",
+      "description": "a colorful addition to your arsenal",
+      "weapon_type": "melee",
+      "damage": 3,
+      "evade_stat": 0,
+      "crit_stat": 10,
+      "armor_stat": 0,
+      "value": 10
+    },
+    {
+      "name": "staple bullet",
+      "description": "careful not to prick your fingers!",
+      "weapon_type": "ranged",
+      "damage": 3,
+      "evade_stat": 10,
+      "crit_stat": 0,
+      "armor_stat": 0,
+      "value": 10
+    },
+    {
+      "name": "sandpaper scrap",
+      "description": "maybe you can wrap it around your hands?",
+      "weapon_type": "melee",
+      "damage": 3,
+      "evade_stat": 0,
+      "crit_stat": 5,
+      "armor_stat": 1,
+      "value": 20
+    },
+    {
+      "name": "slingshot",
+      "description": "reliable and sturdy.",
+      "weapon_type": "ranged",
+      "damage": 4,
+      "evade_stat": 5,
+      "crit_stat": 5,
+      "armor_stat": 0,
+      "value": 20
+    },
+    {
+      "name": "bubble wrap",
+      "description": "try not to pop this one, you need it to survive...",
+      "weapon_type": "special",
+      "damage": 2,
+      "evade_stat": 0,
+      "crit_stat": -10,
+      "armor_stat": 2,
+      "value": 22
+    },
+    {
+      "name": "hand sanitizer",
+      "description": "kills 99.9 percent of germs, or so it says...",
+      "weapon_type": "special",
+      "damage": 4,
+      "evade_stat": -10,
+      "crit_stat": 25,
+      "armor_stat": 0,
+      "value": 24
+    },
+    {
+      "name": "chicken bone",
+      "description": "rotten and teri-fryingly strong",
+      "weapon_type": "melee",
+      "damage": 5,
+      "evade_stat": 0,
+      "crit_stat": 30,
+      "armor_stat": 0,
+      "value": 30
+    },
+    {
+      "name": "ketchup gun",
+      "description": "ronald mcdonald would approve. ba-da-ba-ba-ba",
+      "weapon_type": "ranged",
+      "damage": 3,
+      "evade_stat": 40,
+      "crit_stat": 20,
+      "armor_stat": 0,
+      "value": 30
+    }
+  ],
+  "rooms": [
+    {
+      "name": "Bed",
+      "description": "Soft, comfy, bouncy, white. NO TIME TO SLEEP, get up and fight!",
+      "enemies": ["ant", "ant"],
+      "connected_rooms": {"east": "Under the Bed", "south": "Dollhouse"}
+    },
+    {
+      "name": "Dollhouse",
+      "description": "You were a dirty, messy person living your best life! Randomly got shrunk down overnight! Now you gotta use items to go out and fight! So much to learn and see!",
+      "enemies": "random",
+      "connected_rooms": {"north": "Bed", "east": "Gundam", "south": "Piggy Bank"}
+    },
+    {
+      "name": "Bookshelf",
+      "description": "Did you even read any of these?",
+      "enemies": "random",
+      "connected_rooms": {"west": "RC Car", "north": "Pantry"}
+    },
+    {
+      "name": "Under the Bed",
+      "description": "Its dark and creepy and also wet, enemies or coming! Time to work up a sweat!",
+      "enemies": "random",
+      "connected_rooms": {"west": "Bed", "east": "Dirty Clothes Mountain"}
+    },
+    {
+      "name": "RC Car",
+      "description": "Speed, you are speed, you show speed, if you don’t you might die!",
+      "enemies": "random",
+      "connected_rooms": {"west": "Piggy Bank", "east": "Bookshelf"}
+    },
+    {
+      "name": "Dirty Clothes Mountain",
+      "description": "Peeyew! What’s that smell? Vermin coming, i wish you well!",
+      "enemies": "random",
+      "connected_rooms": {"west": "Under the Bed", "east": "Dustbin"}
+    },
+    {
+      "name": "Gundam",
+      "description": "Suit up! The evil villians have taken control of the faithful hero suit! Fight them off to save gundam!",
+      "enemies": "random",
+      "connected_rooms": {"east": "Lego Castle", "west": "Dollhouse"}
+    },
+    {
+      "name": "Lego Castle",
+      "description": "Up in the castle with their new family, Insects saying they’re royalty, How was this disgusting world just waiting for me, I’m so excited to be, BIG",
+      "enemies": "random",
+      "connected_rooms": {"east": "Pantry", "west": "Gundam"}
+    },
+    {
+      "name": "Toy Train",
+      "description": "ChoooChooo Chugga Chugga Chugga Chugga ChoooChooo, make sure you dont get runover by the erratic villains of the big thunder mountain railroad!",
+      "enemies": "random"
+    },
+    {
+      "name": "Piggy Bank",
+      "description": "This little piggy went to the market… this little piggy stayed at home… this little piggy had roast beef… this little piggy had none… and  this little piggy is  full of soooooooo many enemies…yayyy!",
+      "enemies": "random",
+      "connected_rooms": {"north": "Dollhouse", "east": "RC Car"}
+    },
+    {
+      "name": "Dustbin",
+      "description": "The bright red dust bin erupts with scraps, Watch your step, dodge those attacks!",
+      "enemies": "random",
+      "connected_rooms": {"west": "Dirty Clothes Mountain", "south": "Pantry"}
+    },
+    {
+      "name": "Pantry",
+      "description": "All enemies here are well fed and slaying them will feel extra rewarding. But beware! To them you look like a tasty treat to satisfy their hunger!",
+      "enemies": ["toy soldier", "THE FAT RAT."],
+      "connected_rooms": {"north": "Dustbin", "west": "Lego Castle", "south": "Bookshelf"}
+    }
+  ]
+}
