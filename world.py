@@ -5,23 +5,24 @@ import room
 
 
 def create_world() -> "World":
-    world = World()
-    for name in data.room_names:
-        world.add_room(room.create_room(name))
+    rooms = [
+        room.create_room(name)
+        for name in data.room_names
+    ]
+    world = World(rooms)
     return world
 
 
 class World:
-    def __init__(self):
+    def __init__(self, rooms: list[room.Room] | None = None):
         self.rooms: dict[str, room.Room] = {}
-        self.current_room = None
+        if rooms:
+            for room_ in rooms:
+                self.add_room(room_)
 
-    def add_room(self, room: room.Room):
+    def add_room(self, room_: room.Room):
         """adds a room to the map, sets current room if not set"""
-        self.rooms[room.get_name()] = room
-        if self.current_room is None:
-            self.current_room = room
-            self.current_room.visit()
+        self.rooms[room_.get_name()] = room_
 
     def get_room(self, name: str) -> room.Room:
         return self.rooms[name]

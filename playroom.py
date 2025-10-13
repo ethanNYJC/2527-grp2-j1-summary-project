@@ -3,6 +3,7 @@
 import random
 
 import character
+import config
 import items
 import room
 import shop
@@ -23,11 +24,11 @@ class Game:
         self.player = character.create_player()
         self.shop = shop.Shop(self.player)
         self.world = world.create_world()
-        self.current_room = None
+        self.current_room = self.world.get_room(config.START_ROOM)
 
     def prompt_for_move(self) -> str:
         """Prompt the player to choose a direction to move in."""
-        current_room = self.world.current_room
+        current_room = self.current_room
         direction_options = {
             direction: name
             for direction, name in current_room.get_connected_rooms().items()
@@ -43,11 +44,16 @@ class Game:
 
     def move_in_direction(self, direction: str) -> None:
         """move in the specified direction"""
-        current_room = self.world.current_room
-        next_room = self.world.get_room(current_room.get_direction(direction))
-        current_room.visit()  
-        print(f"You move {direction}.\n")
+        current_room = self.current_room
+        room_name = current_room.get_direction(direction)
+        if not room_name:
+            raise ValueError(
+                f"Cannot move in direction {direction} from {current_room}"
+            )
+        next_room = self.world.get_room(room_name)
         self.current_room = next_room
+        current_room.visit()
+        print(f"You move {direction}.")
 
     def equip_item(self, item: items.Weapon):
         self.player.replace_weapon(item)
@@ -178,15 +184,15 @@ class Game:
         print(text.victory_msg)
 
     def run(self) -> None:
-        print(self.world.describe(self.current_room))
+        print(self.world.describe(self.current_room.name))
         while self.player.is_alive():
             current_room = self.current_room
             print(f'enemies in room: {", ".join(current_room.enemies)}\n')
             text.prompt_continue(
                 f'press "Enter" to start your battle in {current_room}'
             )
-            self.fight_room(self.world.get_room(current_room))
+            self.fight_room(current_room)
             direction = self.prompt_for_move()
             self.move_in_direction(direction)
-            print(self.world.describe(self.current_room))
+            print(self.world.describe(self.current_room.name))
             self.visit_shop()
