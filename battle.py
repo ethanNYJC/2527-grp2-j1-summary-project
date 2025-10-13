@@ -2,7 +2,7 @@ import os
 
 from character import roll_dice, Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat 
 from weapon import  Weapon, default, crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun, weapon_list
-from room import Room, GameMap, world
+from room import Room, World, world
 import text
 
 

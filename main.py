@@ -1,5 +1,3 @@
-import os
-
 from battle import fight, fight_room
 from room import world
 from character import Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat 
@@ -16,7 +14,6 @@ intro_list = [
 def main():
     """main game loop"""
     text.clear()
-
     print(f'Welcome to {text.game_title}')
     text.linebreak()
     print(text.starting_desc)
