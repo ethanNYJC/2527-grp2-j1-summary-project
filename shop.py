@@ -1,7 +1,9 @@
+import os
+import random
+
 from character import Character, Player, player
 from weapon import Weapon, weapon_list
-import random
-import os
+
 
 class Shop:
     def __init__(self, player):

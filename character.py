@@ -1,14 +1,16 @@
 import random
-import os
+
 from health_bar import HealthBar
 from weapon import Weapon, default, crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun, weapon_list
 
-def roll_dice(num, denom) -> bool:
+
+def roll_dice(num: int, denom: int) -> bool:
     """Simulates a dice roll where the chance is num / denom.
     Returns True if the roll succeeds, otherwise False.
     """
     roll = random.randint(1, denom)
     return roll <= num
+
 
 class Character:
     def __init__(self, name, health, weapon: Weapon, evade_chance, crit_chance, armor) -> None:

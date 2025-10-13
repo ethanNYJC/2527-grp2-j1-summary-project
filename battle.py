@@ -1,7 +1,10 @@
+import os
+
 from character import roll_dice, Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat 
 from weapon import  Weapon, default, crayon, staple_bullet, sandpaper_scrap, slingshot, bubble_wrap, hand_sanitizer, chicken_bone, ketchup_gun, weapon_list
 from room import Room, GameMap, world
-import os
+import text
+
 
 def single_attack(attacker: Character, defender: Character):
     """Apply a single attack from the player to the enemy.
@@ -29,8 +32,7 @@ def fight(player, enemy):
     count = 0
 
     while True:
-        os.system("clear")
-
+        text.clear()
         player.display_stats()
         print("Xx" + "-"*54 + "xX")
 
@@ -50,7 +52,7 @@ def fight(player, enemy):
                     if enemy.total_armor > 0:
                         print(f'\t\t{enemy.total_armor} damage blocked!')
             else:
-                os.system("clear")
+                text.clear()
                 print('Game Over! Thanks for playing.')
                 exit(1)
             
@@ -68,7 +70,7 @@ def fight(player, enemy):
                     if player.total_armor > 0:
                         print(f'\t\t{player.total_armor} damage blocked!')
             else:
-                os.system("clear")
+                text.clear()
 
                 if enemy.name == "THE FAT RAT.":
                     victory_screen()
@@ -99,35 +101,4 @@ def fight_room(room: Room):
     world.move()
 
 def victory_screen():
-    print("\n" + "=" * 60)
-    print(" " * 15 + "🏆 CONGRATULATIONS, HERO! 🏆")
-    print("=" * 60)
-    print(r"""
-__     ______  _    _        __          _______ _   _ 
-\ \   / / __ \| |  | |       \ \        / /_   _| \ | |
- \ \_/ / |  | | |  | |        \ \  /\  / /  | | |  \| |
-  \   /| |  | | |  | |         \ \/  \/ /   | | | . ` |
-   | | | |__| | |__| |          \  /\  /   _| |_| |\  |
-   |_|  \____/ \____/            \/  \/   |_____|_| \_|
-
-    """)
-    print("\nMummy and Daddy turned you back to your normal size!")
-    print("Hopefully you clean your room next time...")
-    print("\n" + "-" * 60)
-    print("🎉 Thanks for playing! 🎉")
-    print("=" * 60 + "\n")
-
-
-
-
-
-
-
-    
-
-    
-        
-
-        
-        
-        
+    print(text.victory_msg)

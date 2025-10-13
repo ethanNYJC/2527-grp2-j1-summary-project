@@ -1,6 +1,8 @@
-from character import Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat, enemy_list
 import os
 import random
+
+from character import Character, Player, Enemy, player, ant, flying_cockroach, dustmite, jumping_spider, ladybug, toy_soldier, fat_rat, enemy_list
+
 
 def create_enemies():
     num_enemies = random.randint(2,3)
@@ -12,6 +14,7 @@ def create_enemies():
         enemy_list_copy.remove(choice)
 
     return enemies
+
 
 class Room:
     def __init__(self, name: str, description: str, enemies: list):
@@ -35,6 +38,7 @@ class Room:
     
     def set_entered(self):
         self.entered = True
+
 
 class GameMap:
     def __init__(self):
@@ -162,7 +166,3 @@ bookshelf.set_connected('north', pantry)
 world = GameMap()
 for room in room_list:
     world.add_room(room)
-
-print(world.describe_current())
-
-
