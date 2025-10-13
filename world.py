@@ -22,7 +22,7 @@ class World:
         self.rooms[room.get_name()] = room
         if self.current_room is None:
             self.current_room = room
-            self.current_room.set_entered()
+            self.current_room.visit()
 
     def get_room(self, name: str) -> room.Room:
         return self.rooms[name]

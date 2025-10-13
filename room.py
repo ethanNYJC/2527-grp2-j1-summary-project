@@ -49,5 +49,5 @@ class Room:
     def get_connected_rooms(self) -> dict[str, str | None]:
         return self.connected_rooms
     
-    def set_entered(self):
+    def visit(self):
         self.entered = True

@@ -45,7 +45,7 @@ class Game:
         """move in the specified direction"""
         current_room = self.world.current_room
         next_room = self.world.get_room(current_room.get_direction(direction))
-        current_room.set_entered()  
+        current_room.visit()  
         print(f"You move {direction}.\n")
         self.current_room = next_room
 
