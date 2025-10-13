@@ -2,15 +2,27 @@ import os
 import random
 
 import data
+import text
 import weapon
+
+
+def _random_weapon() -> weapon.Weapon:
+    weapon_name = random.choice(data.weapon_names)
+    return weapon.create_weapon(weapon_name)
 
 
 class Shop:
     def __init__(self, player):
         self.player = player
-        self.weapons = data.weapon_names
+        self.items = {
+            "slot1": _random_weapon(),
+            "slot2": _random_weapon()
+        }
+
+    def display_cost(self, item: weapon.Weapon) -> None:
+        print(f"1. {item.name} - {item.value} crumbs")
     
-    def display_stats(self, weapon: weapon.Weapon):
+    def display_stats(self, weapon: weapon.Weapon) -> None:
         print(f'  [{weapon.damage_min}-{weapon.damage_max} damage]')
         if weapon.evade_stat != 0:
             print(f'  [{weapon.evade_stat}% evade chance]')
@@ -20,11 +32,8 @@ class Shop:
             print(f'  [+{weapon.armor_stat} armor]')
 
     def refresh_shop(self):
-        global weapon_slot1
-        weapon_slot1 = random.choice(self.weapons)
-
-        global weapon_slot2
-        weapon_slot2 = random.choice(self.weapons)
+        self.items["slot1"] = _random_weapon()
+        self.items["slot2"] = _random_weapon()
 
     def display_shop(self):
         print("\n=== 🛒 Welcome to the Shop ===")
@@ -33,33 +42,30 @@ class Shop:
         print(f"no. of crumbs: {self.player.crumbs}\n")
         print("\n-- Weapons --")
 
-        
-        print(f"1. {weapon_slot1.name} - {weapon_slot1.value} crumbs")
-        self.display_stats(weapon_slot1)
-
-        print(f"2. {weapon_slot2.name} - {weapon_slot2.value} crumbs")
-        self.display_stats(weapon_slot2)
-
+        self.display_cost(self.items['slot1'])
+        self.display_stats(self.items['slot1'])
+        self.display_cost(self.items['slot2'])
+        self.display_stats(self.items['slot2'])
         print(f"3. fried egg - 3 crumbs")
         print(f'  [+10 health]')
         print("0. Exit Shop")
 
-    def buy_item(self, choice):
-        if choice == "1":
-            if self.player.crumbs >= weapon_slot1.value: 
-                self.player.crumbs -= weapon_slot1.value
-                self.player.replace_weapon(weapon_slot1)
+    def buy_item(self, choice: str):
+        if choice == self.items["slot1"].name:
+            if self.player.crumbs >= self.items["slot1"].value:
+                self.player.crumbs -= self.items["slot1"].value
+                self.player.replace_weapon(self.items["slot1"])
             else:
                 print("you don't have enough crumbs for this item.")
 
-        elif choice == "2":
-            if self.player.crumbs >= weapon_slot2.value:
-                self.player.crumbs -= weapon_slot2.value
-                self.player.replace_weapon(weapon_slot2)
+        elif choice == self.items["slot2"].name:
+            if self.player.crumbs >= self.items["slot2"].value:
+                self.player.crumbs -= self.items["slot2"].value
+                self.player.replace_weapon(self.items["slot2"])
             else:
                 print("you don't have enough crumbs for this item.")
 
-        elif choice == "3":
+        elif choice == "fried egg":
             if self.player.crumbs >= 3:
                 self.player.crumbs -= 3
                 self.player.health = min(self.player.health + 10, 100)
@@ -73,11 +79,17 @@ class Shop:
         
     def open(self):
         self.refresh_shop()
-        while True:
+        choice = None
+        while choice != "exit":
             self.display_shop()
-            choice = input("Choose an item to buy (0 to exit): ")
-            if choice == "0":
-                print("Leaving the shop.")
-                break
-            os.system("clear")
+            text.prompt_valid_choice(
+                options=[
+                    self.items["slot1"].name,
+                    self.items["slot2"].name,
+                    "fried egg",
+                    "exit"
+                ],
+                prompt="Choose an item to buy: "
+            )
+            text.clear()
             self.buy_item(choice)

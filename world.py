@@ -7,8 +7,8 @@ import text
 
 def create_world() -> "World":
     world = World()
-    for room in data.room_names:
-        world.add_room(room.create_room(room))
+    for name in data.room_names:
+        world.add_room(room.create_room(name))
     return world
 
 
@@ -37,19 +37,15 @@ class World:
 
         print(f'\navailable exits:{connected_rooms}')
 
-        direction = input(f'\nWhere do you want to go?')
-
-        while direction not in connected:
-            text.clear()
-            print('invalid direction')
-            print(f'\navailable exits:{connected_rooms}')
-            direction = input(f'\nWhere do you want to go: ')
+        direction = text.prompt_valid_choice(
+            options=f"available exits:{connected_rooms}",
+            prompt="Where do you want to go: "
+        )
         text.clear()
         self.current_room = self.get_room(connected[direction])
         self.current_room.set_entered()  
         print(f"You move {direction}.\n")
         print(self.describe_current())
-
 
     def describe_current(self):
         """return description of current room and exits"""

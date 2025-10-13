@@ -32,6 +32,17 @@ class Weapon:
         self.armor_stat = armor_stat
         self.value = value
 
+    def get_stats_string(self) -> str:
+        stats = []
+        stats.append(f"Damage: {self.damage_min}-{self.damage_max}")
+        if self.evade_stat != 0:
+            stats.append(f"Evade Chance: {self.evade_stat}%")
+        if self.crit_stat != 0:
+            stats.append(f"Crit Chance: {self.crit_stat}%")
+        if self.armor_stat != 0:
+            stats.append(f"Armor: {self.armor_stat}")
+        return "\n".join(stats)
+
     @property
     def damage(self):
         return random.randint(self.damage_min, self.damage_max)
