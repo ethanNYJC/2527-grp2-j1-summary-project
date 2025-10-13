@@ -106,7 +106,10 @@ class Game:
         return result    
 
     def fight(self, enemy: character.Enemy) -> bool:
-        count = 0
+        def show_status() -> None:
+            self.player.health_bar.draw()
+            enemy.health_bar.draw()
+            text.prompt_continue('\t\t\b"press enter to attack"')
 
         while True:
             text.clear()
@@ -115,57 +118,51 @@ class Game:
             enemy.display_stats()
             text.divider()
 
-            if count > 0:
-                if self.player.is_alive():
-                    result = self.single_attack(self.player, enemy)
-                    if result["evade"]:
-                        print(f"\t\t{enemy.name} dodged the attack!")
-                    else:
-                        if result["crit"]:
-                            print(f'\t\t{self.player.name} landed a CRITICAL HIT!')
-                        print(f'\t\t{self.player.name} did {result["dmg"]} damage to {enemy.name}!')
-
-                        if enemy.total_armor > 0:
-                            print(f'\t\t{enemy.total_armor} damage blocked!')
+            show_status()
+            if self.player.is_alive():
+                result = self.single_attack(self.player, enemy)
+                if result["evade"]:
+                    print(f"\t\t{enemy.name} dodged the attack!")
                 else:
-                    text.clear()
-                    print('Game Over! Thanks for playing.')
-                    exit(1)
-                
-                if enemy.is_alive():
-                    result = self.single_attack(enemy, self.player)
-                    if result["evade"]:
-                        print(f"\n\t\t{self.player.name} dodged the attack!")
-                    else:
-                        if result["crit"]:
-                            print(f'\n\t\t{enemy.name} landed a CRITICAL HIT!')
-                            print(f'\t\t{enemy.name} did {result["dmg"]} damage to {self.player.name}!')
-                        else:
-                            print(f'\n\t\t{enemy.name} did {result["dmg"]} damage to {self.player.name}!')
+                    if result["crit"]:
+                        print(f'\t\t{self.player.name} landed a CRITICAL HIT!')
+                    print(f'\t\t{self.player.name} did {result["dmg"]} damage to {enemy.name}!')
 
-                        if self.player.total_armor > 0:
-                            print(f'\t\t{self.player.total_armor} damage blocked!')
-                else:
-                    text.clear()
-
-                    if enemy.name == "THE FAT RAT.":
-                        self.victory_screen()
-                        exit(1)
-
-                    self.player.crumbs += enemy.loot
-                    enemy.health = enemy.health_max
-                    enemy.health_bar.update()
-                    print('YOU WIN YIPPEE!')
-                    print(f'final health: {self.player.health}/{self.player.health_max}')
-                    print(f'no. of crumbs: {self.player.crumbs}')
-                    return True
-                text.divider()
-
+                    if enemy.total_armor > 0:
+                        print(f'\t\t{enemy.total_armor} damage blocked!')
+            else:
+                text.clear()
+                print('Game Over! Thanks for playing.')
+                exit(1)
             
-            self.player.health_bar.draw()
-            enemy.health_bar.draw()
-            text.prompt_continue('\t\t\b"press enter to attack"')
-            count += 1
+            if enemy.is_alive():
+                result = self.single_attack(enemy, self.player)
+                if result["evade"]:
+                    print(f"\n\t\t{self.player.name} dodged the attack!")
+                else:
+                    if result["crit"]:
+                        print(f'\n\t\t{enemy.name} landed a CRITICAL HIT!')
+                        print(f'\t\t{enemy.name} did {result["dmg"]} damage to {self.player.name}!')
+                    else:
+                        print(f'\n\t\t{enemy.name} did {result["dmg"]} damage to {self.player.name}!')
+
+                    if self.player.total_armor > 0:
+                        print(f'\t\t{self.player.total_armor} damage blocked!')
+            else:
+                text.clear()
+
+                if enemy.name == "THE FAT RAT.":
+                    self.victory_screen()
+                    exit(1)
+
+                self.player.crumbs += enemy.loot
+                enemy.health = enemy.health_max
+                enemy.health_bar.update()
+                print('YOU WIN YIPPEE!')
+                print(f'final health: {self.player.health}/{self.player.health_max}')
+                print(f'no. of crumbs: {self.player.crumbs}')
+                return True
+            text.divider()
 
     def fight_room(self, room: room.Room) -> None:
         for i, enemy_name in enumerate(room.enemies, start=1):
