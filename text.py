@@ -1,0 +1,101 @@
+"""Game text and functions for handling text."""
+
+import os
+
+
+game_title = "Playroom"
+
+game_rules = """
+- Player (Hero) will start with 50 health and base attack, evade chance, crit chance and 0 armor. 
+- Each Room will have a random number of enemies spawned (2-3). Each enemy will drop money (crumbs)
+- Battle is automated with each turn trading attacks until one wins.
+
+- After every Room, a Shop with 2 randomly generated weapons and a consumable to recover health will
+be made available in exchange for crumbs
+
+After the Shop, a choice can be made to go to the next Room depending on which direction you choose.
+
+GOOD LUCK!
+"""
+
+starting_desc = """
+    In this game, you are a child who didn't clean your room. To teach you a lesson, your parents shrunk you down
+to the size of an ant to let you experience how dirty your room was. During your journey to the door, you encounter
+many gargantuan beasts that were once tiny compared to you, now posing a real threat. As you continue on your
+adventure, level up your gear to defeat stronger and stronger foes, up until the final boss... 
+"""
+
+victory_msg = """
+==========================================================
+               🏆 CONGRATULATIONS, HERO! 🏆
+==========================================================
+__     ______  _    _        __          _______ _   _ 
+\ \   / / __ \| |  | |       \ \        / /_   _| \ | |
+ \ \_/ / |  | | |  | |        \ \  /\  / /  | | |  \| |
+  \   /| |  | | |  | |         \ \/  \/ /   | | | . ` |
+  | | | |__| | |__| |          \  /\  /   _| |_| |\  |
+  |_|  \____/ \____/            \/  \/   |_____|_| \_|
+
+
+  Mummy and Daddy turned you back to your normal size!
+  Hopefully you clean your room next time...
+==========================================================
+
+                🎉 Thanks for playing! 🎉
+==========================================================
+"""
+
+error_msg = "Sorry, I dont understand the command"
+
+
+# clear terminal
+def clear() -> None:
+    """Clear the terminal screen."""
+    os.system('clear')
+
+
+def linebreak() -> None:
+    """Print a line break."""
+    print()
+
+
+def divider() -> None:
+    """Print a divider line."""
+    print("Xx" + "-"*54 + "xX")
+
+
+def prompt_continue(prompt: str = "Press Enter to continue...") -> None:
+    """Prompt the user to press Enter to continue."""
+    input(prompt)
+
+
+def prompt_valid_choice(
+        options: list[str] | dict[str, str],
+        preamble: str | None = None,
+        prompt: str = "Choose an option: "
+) -> str:
+    """Prompt the user to select a valid choice from a list or dict of options.
+    
+    Args:
+        options: A list or dictionary of valid options.
+                 If a list is provided, the function returns the selected option.
+                 If a dictionary is provided, the function displays the value as additional detail of the key, and returns the key.
+        preamble: An optional string to display before the options.
+        prompt: The prompt string to display when asking for input.
+    """
+    if preamble:
+        print(preamble)
+    if isinstance(options, dict):
+        for i, (option, details) in enumerate(options.items(), start=1):
+            print(f"{i}: {option} ({details})")
+    elif isinstance(options, list):
+        for i, option in enumerate(options, start=1):
+            print(f"{i}: {option}")
+    while True:
+        choice = input(prompt)
+        if choice.isdigit() and 1 <= int(choice) <= len(options):
+            if isinstance(options, dict):
+                return list(options.keys())[int(choice) - 1]
+            else:
+                return options[int(choice) - 1]
+        print("Invalid choice. Please try again.")
