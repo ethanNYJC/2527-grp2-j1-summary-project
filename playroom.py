@@ -109,6 +109,9 @@ class Game:
         exit(1)
 
     def win_game(self) -> None:
+        print('YOU WIN YIPPEE!')
+        print(f'final health: {self.player.health}/{self.player.health_max}')
+        print(f'no. of crumbs: {self.player.crumbs}')
         print(text.victory_msg)
         exit(1)
 
@@ -150,7 +153,7 @@ class Game:
             print(f'\t\t{result["attacker"]} landed a CRITICAL HIT!')
         print(f'\t\t{result["attacker"]} did {result["damage_dealt"]} damage to {result["defender"]}!')
 
-    def fight(self, enemy: character.Enemy) -> bool:
+    def fight_enemy(self, enemy: character.Enemy) -> bool:
         """Handles the fight between the player and a single enemy.
 
         Fight ends when either the player or the enemy is defeated.
@@ -161,7 +164,9 @@ class Game:
             enemy.health_bar.draw()
             text.prompt_continue('\t\t\b"press enter to attack"')
 
-        while True:
+        attacker = self.player
+        defender = enemy
+        while attacker.is_alive() and defender.is_alive():
             text.clear()
             self.player.display_stats()
             text.divider()
@@ -169,34 +174,30 @@ class Game:
             text.divider()
 
             show_status()
-            result = self.single_attack(self.player, enemy)
+            result = self.single_attack(attacker, defender)
             self.attack_report(result)
-            if not self.player.is_alive():
-                self.lose_game()
-                return False
-            
-            if enemy.is_alive():
-                result = self.single_attack(enemy, self.player)
-                self.attack_report(result)
-            else:
-                if enemy.name == BOSS_NAME:
-                    self.win_game()
-                self.player.take_crumbs(enemy.loot)
-                print('YOU WIN YIPPEE!')
-                print(f'final health: {self.player.health}/{self.player.health_max}')
-                print(f'no. of crumbs: {self.player.crumbs}')
-                return True
             text.divider()
+            attacker, defender = defender, attacker
 
-    def fight_room(self, room: room.Room) -> None:
+        if self.player.is_alive():
+            return True
+        else:
+            assert not enemy.is_alive()
+            return False
+
+    def fight_enemies_in_room(self, room: room.Room) -> None:
         """Fight all enemies in the room"""
         for i, enemy_name in enumerate(room.enemies, start=1):
             enemy = character.create_enemy(enemy_name)
             self.player.health_bar.update()
-            self.fight(enemy)
+            player_win = self.fight_enemy(enemy)
+            if not player_win:
+                self.lose_game()  # exits
+            if enemy.name == BOSS_NAME:
+                self.win_game()  # exits
+            print(f'\n{enemy.name} dropped {enemy.loot} crumbs!')
+            self.player.take_crumbs(enemy.loot)
             if i < len(room.enemies):
-                print(f'\n{enemy.name} dropped {enemy.loot} crumbs!')
-                self.player.take_crumbs(enemy.loot)
                 text.prompt_continue('press enter to fight the next enemy')
 
     def run(self) -> None:
@@ -207,7 +208,7 @@ class Game:
             text.prompt_continue(
                 f'press "Enter" to start your battle in {current_room}'
             )
-            self.fight_room(current_room)
+            self.fight_enemies_in_room(current_room)
             direction = self.prompt_for_move()
             self.move_in_direction(direction)
             print(self.world.describe(self.current_room.name))
