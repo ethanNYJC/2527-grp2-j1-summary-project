@@ -11,6 +11,8 @@ import shop
 import text
 import world
 
+BOSS_NAME = "THE FAT RAT."
+
 
 def roll_dice(num: int, denom: int) -> bool:
     """Simulates a dice roll where the chance is num / denom.
@@ -101,6 +103,15 @@ class Game:
             if choice != "exit":
                 self.transact(choice)
 
+    def lose_game(self) -> None:
+        text.clear()
+        print('Game Over! Thanks for playing.')
+        exit(1)
+
+    def win_game(self) -> None:
+        print(text.victory_msg)
+        exit(1)
+
     def single_attack(self,
                       attacker: character.Character,
                       defender: character.Character) -> dict:
@@ -109,27 +120,42 @@ class Game:
         Assume: enemy is alive, player is alive.
         """
         result: dict[str, Any] = {
-            "attacker": "player",
-            "defender": "enemy"
+            "attacker": attacker.name,
+            "defender": defender.name
         }
         result["evade"] = roll_dice(defender.calculate_evade(), 100)
 
-        attacker_damage = attacker.calculate_damage()
-        defender_armor = defender.calculate_armor()
-        dmg = (
-            attacker_damage - defender_armor
-            if attacker_damage > defender_armor else 0
-        )
-        result["crit"] = roll_dice(attacker.calculate_crit(), 100)
-
-        if result["crit"]:
-            dmg *= 2
-        result["dmg"] = dmg
+        result["attacker_damage"] = roll_damage(attacker.calculate_damage())
+        result["defender_armor"] = defender.calculate_armor()
         if not result["evade"]:
-            defender.take_damage(dmg)
-        return result    
+            result["crit"] = roll_dice(attacker.calculate_crit(), 100)
+            if result["attacker_damage"] > result["defender_armor"]:
+                result["damage_dealt"] = result["attacker_damage"] - result["defender_armor"]
+                if result["crit"]:
+                    result["damage_dealt"] *= 2
+                defender.take_damage(result["damage_dealt"])
+            else:
+                result["damage_blocked"] = result["attacker_damage"]
+        return result
+
+    def attack_report(self, result: dict) -> None:
+        """Prints the result of an attack."""
+        if result["evade"]:
+            print(f"\t\t{result['defender']} dodged the attack!")
+            return
+        if "damage_blocked" in result:
+            print(f'\t\t{result["damage_blocked"]} damage blocked!')
+            return
+        if result["crit"]:
+            print(f'\t\t{result["attacker"]} landed a CRITICAL HIT!')
+        print(f'\t\t{result["attacker"]} did {result["damage_dealt"]} damage to {result["defender"]}!')
 
     def fight(self, enemy: character.Enemy) -> bool:
+        """Handles the fight between the player and a single enemy.
+
+        Fight ends when either the player or the enemy is defeated.
+        Returns True if the player wins, otherwise False.
+        """
         def show_status() -> None:
             self.player.health_bar.draw()
             enemy.health_bar.draw()
@@ -143,45 +169,19 @@ class Game:
             text.divider()
 
             show_status()
-            if self.player.is_alive():
-                result = self.single_attack(self.player, enemy)
-                if result["evade"]:
-                    print(f"\t\t{enemy.name} dodged the attack!")
-                else:
-                    if result["crit"]:
-                        print(f'\t\t{self.player.name} landed a CRITICAL HIT!')
-                    print(f'\t\t{self.player.name} did {result["dmg"]} damage to {enemy.name}!')
-
-                    if enemy.total_armor > 0:
-                        print(f'\t\t{enemy.total_armor} damage blocked!')
-            else:
-                text.clear()
-                print('Game Over! Thanks for playing.')
-                exit(1)
+            result = self.single_attack(self.player, enemy)
+            self.attack_report(result)
+            if not self.player.is_alive():
+                self.lose_game()
+                return False
             
             if enemy.is_alive():
                 result = self.single_attack(enemy, self.player)
-                if result["evade"]:
-                    print(f"\n\t\t{self.player.name} dodged the attack!")
-                else:
-                    if result["crit"]:
-                        print(f'\n\t\t{enemy.name} landed a CRITICAL HIT!')
-                        print(f'\t\t{enemy.name} did {result["dmg"]} damage to {self.player.name}!')
-                    else:
-                        print(f'\n\t\t{enemy.name} did {result["dmg"]} damage to {self.player.name}!')
-
-                    if self.player.total_armor > 0:
-                        print(f'\t\t{self.player.total_armor} damage blocked!')
+                self.attack_report(result)
             else:
-                text.clear()
-
-                if enemy.name == "THE FAT RAT.":
-                    self.victory_screen()
-                    exit(1)
-
-                self.player.crumbs += enemy.loot
-                enemy.health = enemy.health_max
-                enemy.health_bar.update()
+                if enemy.name == BOSS_NAME:
+                    self.win_game()
+                self.player.take_crumbs(enemy.loot)
                 print('YOU WIN YIPPEE!')
                 print(f'final health: {self.player.health}/{self.player.health_max}')
                 print(f'no. of crumbs: {self.player.crumbs}')
@@ -189,6 +189,7 @@ class Game:
             text.divider()
 
     def fight_room(self, room: room.Room) -> None:
+        """Fight all enemies in the room"""
         for i, enemy_name in enumerate(room.enemies, start=1):
             enemy = character.create_enemy(enemy_name)
             self.player.health_bar.update()
@@ -197,9 +198,6 @@ class Game:
                 print(f'\n{enemy.name} dropped {enemy.loot} crumbs!')
                 self.player.take_crumbs(enemy.loot)
                 text.prompt_continue('press enter to fight the next enemy')
-
-    def victory_screen(self):
-        print(text.victory_msg)
 
     def run(self) -> None:
         print(self.world.describe(self.current_room.name))

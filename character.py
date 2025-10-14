@@ -148,7 +148,7 @@ class Enemy(Character):
                  evade_chance: int,
                  crit_chance: int,
                  armor: int,
-                 loot: list[str]):
+                 loot: int):
         super().__init__(name, health, weapon, evade_chance, crit_chance, armor)
         self.health_bar = HealthBar(self, color="red")
         self.loot = loot
